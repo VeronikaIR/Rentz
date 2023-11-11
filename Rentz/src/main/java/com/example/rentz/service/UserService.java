@@ -5,6 +5,7 @@ import com.example.rentz.data.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -19,8 +20,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User getUserById(String id) {
-        return userRepository.findById(id).orElse(null);
+    public Optional<User> getUserById(String id) {
+        return userRepository.findById(id);
     }
 
     public User createUser(User user) {
@@ -31,7 +32,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void deleteUserById(String id) {
-        userRepository.deleteById(id);
+    public void deleteUser(User user) {
+        userRepository.delete(user);
     }
 }

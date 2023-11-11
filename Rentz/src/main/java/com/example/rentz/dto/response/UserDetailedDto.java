@@ -5,5 +5,4 @@ public class UserDetailedDto {
     private String name;
     private String email;
     private String personalInformation;
-    private Long profilePictureId;
 }

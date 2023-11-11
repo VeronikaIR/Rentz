@@ -1,30 +1,33 @@
 package com.example.rentz.data.domain;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
+import lombok.*;
 
-@Document(collection = "user")
+@Entity
+@Table(name = "users")
 @Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
     private String id;
 
-    @Field("name")
     @NotBlank
     private String name;
 
-    @Field("email")
+    @NotBlank
     private String email;
 
-    @Field("personal_information")
+    @NotBlank
     private String personalInformation;
 
-    @Field("profile_picture_id")
-    private Long profilePictureId;
-
-    // Getters and setters omitted for brevity
+    //TODO add profilePictureId later
+//    @NotBlank
+//    private Long profilePictureId;
 }
