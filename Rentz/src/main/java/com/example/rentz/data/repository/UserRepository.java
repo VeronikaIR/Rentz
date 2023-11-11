@@ -1,6 +1,5 @@
 package com.example.rentz.data.repository;
 
-import com.example.rentz.data.domain.Item;
 import com.example.rentz.data.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 

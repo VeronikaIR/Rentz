@@ -14,6 +14,7 @@ public class ItemDto {
     private String title;
     private String description;
     private boolean availableNow;
+    private Double priceForDay;
    // private List<String> pictures;
     private Long owner;
     private Long rentedBy;

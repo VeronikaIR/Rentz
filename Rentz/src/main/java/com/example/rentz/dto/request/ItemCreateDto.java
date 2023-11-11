@@ -21,12 +21,15 @@ public class ItemCreateDto {
     private String description;
 
     @NotBlank
-    private boolean isAvailable;
+    private boolean availableNow;
+
+    @NotBlank
+    private Double priceForDay;
 
     //TODO implement logic for storing pictures
     // private List<String> pictures;
 
     @NotBlank
-    private Long ownerId;
-    private Long rentedById;
+    private String ownerId;
+    private String rentedById;
 }

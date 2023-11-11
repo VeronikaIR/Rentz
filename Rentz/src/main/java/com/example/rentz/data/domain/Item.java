@@ -27,27 +27,30 @@ public class Item {
     @NotBlank
     private boolean availableNow;
 
+    @NotBlank
+    private Double priceForDay;
+
 //    @NotBlank
 //    private List<String> pictures;
 
     @NotBlank
-    @OneToOne(cascade = CascadeType.ALL)
+  //  @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
-    private User owner;
+    private String owner;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    //  @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "rentedBy_id", referencedColumnName = "id")
-    private User rentedBy;
+    private String rentedBy;
 
     //    public Item() {
 //    }
 //
-    public Item(String title, String description, boolean availableNow, User owner, User rentedBy) {
-        this.title = title;
-        this.description = description;
-        this.availableNow = availableNow;
-        // this.pictures = pictures;
-        this.owner = owner;
-        this.rentedBy = rentedBy;
-    }
+//    public Item(String title, String description, boolean availableNow, String owner, String rentedBy) {
+//        this.title = title;
+//        this.description = description;
+//        this.availableNow = availableNow;
+//        // this.pictures = pictures;
+//        this.owner = owner;
+//        this.rentedBy = rentedBy;
+//    }
 }
