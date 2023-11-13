@@ -1,11 +1,13 @@
-#spring:
-#  datasource:
-#    url: jdbc:postgresql://localhost:5432/<YOUR_DATABASE_NAME>
-#    username: <YOUR_USERNAME>
-#    password: <YOUR_PASSWORD>
-#  jpa:
-#    hibernate:
-#      ddl-auto: <create | create-drop | update | validate | none>
-#    properties:
-#      hibernate:
-#        dialect: org.hibernate.dialect.PostgreSQLDialect
+spring:
+  application:
+    name: rentz
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?autoReconnect=true&useSSL=false&createDatabaseIfNotExist=true
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      dialect: org.hibernate.dialect.PostgreSQLDialect

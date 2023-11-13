@@ -20,7 +20,7 @@ public class ItemService {
         return itemRepository.findAll();
     }
 
-    public Optional<Item> getItemById(String id) {
+    public Optional<Item> getItemById(Long id) {
         return itemRepository.findById(id);
     }
 

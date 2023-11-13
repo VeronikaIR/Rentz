@@ -1,11 +1,15 @@
 package com.example.rentz.data.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
-@Table(name = "items")
+@Table(name = "ITEMS")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,8 +18,7 @@ public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
-    private String id;
+    private Long id;
 
     @NotBlank
     private String title;
@@ -34,23 +37,14 @@ public class Item {
 //    private List<String> pictures;
 
     @NotBlank
-  //  @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
-    private String owner;
+    private User owner;
 
-    //  @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "rentedBy_id", referencedColumnName = "id")
-    private String rentedBy;
+     @JsonIgnore
+     @OneToMany(mappedBy = "bookedItem")
+     private List<Reservation> reservations = new ArrayList<>();
 
-    //    public Item() {
-//    }
-//
-//    public Item(String title, String description, boolean availableNow, String owner, String rentedBy) {
-//        this.title = title;
-//        this.description = description;
-//        this.availableNow = availableNow;
-//        // this.pictures = pictures;
-//        this.owner = owner;
-//        this.rentedBy = rentedBy;
-//    }
+   // @OneToOne(cascade = CascadeType.ALL)
+    //private User rented;
 }

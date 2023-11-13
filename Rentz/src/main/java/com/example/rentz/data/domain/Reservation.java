@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 
 @Entity
-@Table(name = "reservations")
+@Table(name = "RESERVATIONS")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,12 +16,18 @@ import java.time.LocalDate;
 public class Reservation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
-    private String itemId;
+    private Long id;
 
     @NotBlank
-    private String ownerId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "reservedBy_id", referencedColumnName = "id")
+    private User owner;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "bookedItem_id", referencedColumnName = "id")
+    private Item bookedItem;
 
     @NotBlank
     private Double totalPrice;

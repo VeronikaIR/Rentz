@@ -1,6 +1,7 @@
 package com.example.rentz.rest;
 
 import com.example.rentz.data.domain.User;
+import com.example.rentz.dto.request.UserCreateDto;
 import com.example.rentz.dto.response.UserDetailedDto;
 import com.example.rentz.exception.ResourceNotFoundException;
 import com.example.rentz.mapper.UserMapper;
@@ -11,8 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
-@RequestMapping("/users")
+@RequestMapping(value = "/api/users", produces = APPLICATION_JSON_VALUE)
 public class UserController {
 
     private final UserMapper userMapper;
@@ -34,20 +37,23 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDetailedDto> getUserById(@PathVariable String id) {
+    public ResponseEntity<UserDetailedDto> getUserById(@PathVariable Long id) {
         User user = userService.getUserById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         return ResponseEntity.ok(this.userMapper.toUserDetailedDto(user));
     }
 
-    @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    @PostMapping(consumes = APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDetailedDto> createUser(@RequestBody UserCreateDto userCreateDto) {
+
+        User createdUser = userService.createUser(this.userMapper.toUser(userCreateDto));
+
+        return ResponseEntity.ok(this.userMapper.toUserDetailedDto(createdUser));
     }
 
     @PutMapping("/{id}")
-    public void updateUser(@PathVariable String id, @RequestBody UserDetailedDto  userDetailedDto) {
+    public void updateUser(@PathVariable Long id, @RequestBody UserDetailedDto userDetailedDto) {
 
         User user = userService.getUserById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
@@ -57,7 +63,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUserById(@PathVariable String id) {
+    public void deleteUserById(@PathVariable Long id) {
         User user = userService.getUserById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 

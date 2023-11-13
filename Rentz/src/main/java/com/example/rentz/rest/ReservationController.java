@@ -6,6 +6,7 @@ import com.example.rentz.dto.response.ReservationDto;
 import com.example.rentz.exception.ResourceNotFoundException;
 import com.example.rentz.mapper.ReservationMapper;
 import com.example.rentz.service.ReservationService;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/reservation")
+@RequestMapping("/api/reservations")
+@AutoConfiguration
 public class ReservationController {
 
     private final ReservationMapper reservationMapper;
@@ -37,7 +39,7 @@ public class ReservationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ReservationDto> getReservationById(@PathVariable String id) {
+    public ResponseEntity<ReservationDto> getReservationById(@PathVariable Long id) {
 
         Reservation reservation = reservationService.getReservationById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Reservation not found"));
@@ -49,6 +51,8 @@ public class ReservationController {
     @PostMapping
     public ResponseEntity<ReservationDto> createReservation(@RequestBody ReservationCreateDto reservationCreateDto) {
 
+
+
         Reservation reservation = reservationMapper.toReservation(reservationCreateDto);
 
         Reservation createdReservation = reservationService.createReservation(reservation);
@@ -57,7 +61,7 @@ public class ReservationController {
     }
 
 //    @PutMapping("/{id}")
-//    public void editReservation(@PathVariable String id, @Valid @RequestBody ReservationCreateDto reservationCreateDto) {
+//    public void editReservation(@PathVariable Long id, @Valid @RequestBody ReservationCreateDto reservationCreateDto) {
 //
 //        Reservation reservation = reservationService.getReservationById(id)
 //                .orElseThrow(() -> new ResourceNotFoundException("Reservation not found"));
@@ -67,7 +71,7 @@ public class ReservationController {
 //    }
 
     @DeleteMapping("/{id}")
-    public void deleteReservationById(@PathVariable String id) {
+    public void deleteReservationById(@PathVariable Long id) {
 
         Reservation reservation = reservationService.getReservationById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Reservation not found"));

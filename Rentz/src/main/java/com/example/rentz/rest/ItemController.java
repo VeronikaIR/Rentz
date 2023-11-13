@@ -7,6 +7,7 @@ import com.example.rentz.exception.ResourceNotFoundException;
 import com.example.rentz.mapper.ItemMapper;
 import com.example.rentz.service.ItemService;
 import jakarta.validation.Valid;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/item")
+@RequestMapping("/api/items")
 public class ItemController {
 
     private final ItemMapper itemMapper;
@@ -40,7 +41,7 @@ public class ItemController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ItemDto> getItemById(@PathVariable String id) {
+    public ResponseEntity<ItemDto> getItemById(@PathVariable Long id) {
 
         Item item = itemService.getItemById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Item not found"));
@@ -52,6 +53,8 @@ public class ItemController {
     @PostMapping
     public ResponseEntity<ItemDto> createItem(@RequestBody ItemCreateDto itemCreateDto) {
 
+        //TODO set the availableNow = true here not in the request
+
         Item item = itemMapper.toItem(itemCreateDto);
 
         Item createdItem = itemService.createItem(item);
@@ -60,7 +63,7 @@ public class ItemController {
     }
 
     @PutMapping("/{id}")
-    public void editItem(@PathVariable String id, @Valid @RequestBody ItemCreateDto itemCreateDto) {
+    public void editItem(@PathVariable Long id, @Valid @RequestBody ItemCreateDto itemCreateDto) {
 
         Item item = itemService.getItemById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Item not found"));
@@ -70,7 +73,7 @@ public class ItemController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteItemById(@PathVariable String id) {
+    public void deleteItemById(@PathVariable Long id) {
 
         Item item = itemService.getItemById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Item not found"));

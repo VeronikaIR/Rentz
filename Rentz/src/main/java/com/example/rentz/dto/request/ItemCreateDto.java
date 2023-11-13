@@ -31,5 +31,5 @@ public class ItemCreateDto {
 
     @NotBlank
     private String ownerId;
-    private String rentedById;
+
 }

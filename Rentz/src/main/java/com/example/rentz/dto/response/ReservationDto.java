@@ -13,11 +13,13 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class ReservationDto {
 
-    private String itemId;
+    private Long id;
 
     private String ownerId;
 
     private Double totalPrice;
+
+    private Double priceForDay;
 
     private LocalDate bookedOn;
 
