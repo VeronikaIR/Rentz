@@ -16,18 +16,19 @@ import java.time.LocalDate;
 public class Reservation {
 
     @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     private Long id;
 
     @NotBlank
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "reservedBy_id", referencedColumnName = "id")
+    @JoinColumn(name = "owner_id", referencedColumnName = "id")
     private User owner;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "bookedItem_id", referencedColumnName = "id")
-    private Item bookedItem;
+    @NotBlank
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "booked_item_id", referencedColumnName = "id")
+    private Item item;
 
     @NotBlank
     private Double totalPrice;

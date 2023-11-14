@@ -30,6 +30,6 @@ public class ItemCreateDto {
     // private List<String> pictures;
 
     @NotBlank
-    private String ownerId;
+    private Long ownerId;
 
 }

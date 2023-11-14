@@ -14,8 +14,12 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReservationCreateDto {
+
     @NotBlank
-    private String ownerId;
+    private Long ownerId;
+
+    @NotBlank
+    private Long itemId;
 
     @NotBlank
     private Double totalPrice;

@@ -15,11 +15,11 @@ public class ReservationDto {
 
     private Long id;
 
-    private String ownerId;
+    private Long ownerId;
+
+    private Long itemId;
 
     private Double totalPrice;
-
-    private Double priceForDay;
 
     private LocalDate bookedOn;
 

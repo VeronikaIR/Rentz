@@ -1,5 +1,6 @@
 package com.example.rentz.dto.response;
 
+import com.example.rentz.data.domain.User;
 import lombok.*;
 
 @Getter
@@ -16,5 +17,5 @@ public class ItemDto {
     private Double priceForDay;
     // private List<String> pictures;
     private Long ownerId;
-    private Long rentedById;
+//    private Long reservationId;
 }

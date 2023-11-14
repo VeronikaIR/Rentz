@@ -52,15 +52,15 @@ public class UserController {
         return ResponseEntity.ok(this.userMapper.toUserDetailedDto(createdUser));
     }
 
-    @PutMapping("/{id}")
-    public void updateUser(@PathVariable Long id, @RequestBody UserDetailedDto userDetailedDto) {
-
-        User user = userService.getUserById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-        this.userMapper.updateUser(user, userDetailedDto);
-
-        userService.updateUser(user);
-    }
+//    @PutMapping("/{id}")
+//    public void updateUser(@PathVariable Long id, @RequestBody UserDetailedDto userDetailedDto) {
+//
+//        User user = userService.getUserById(id)
+//                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+//        this.userMapper.updateUser(user, userDetailedDto);
+//
+//        userService.updateUser(user);
+//    }
 
     @DeleteMapping("/{id}")
     public void deleteUserById(@PathVariable Long id) {

@@ -1,6 +1,7 @@
 package com.example.rentz.data.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.micrometer.observation.ObservationFilter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -40,17 +41,11 @@ public class User {
 //    private Long profilePictureId;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Item> itemsForRent = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "reservedBy")
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reservation> reservations = new ArrayList<>();
-
-
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "rentedBy")
-//    private List<Item> itemsForRent = new ArrayList<>();
-
 
 }

@@ -1,11 +1,15 @@
 package com.example.rentz.rest;
 
+import com.example.rentz.data.domain.Item;
 import com.example.rentz.data.domain.Reservation;
+import com.example.rentz.data.domain.User;
 import com.example.rentz.dto.request.ReservationCreateDto;
 import com.example.rentz.dto.response.ReservationDto;
 import com.example.rentz.exception.ResourceNotFoundException;
 import com.example.rentz.mapper.ReservationMapper;
+import com.example.rentz.service.ItemService;
 import com.example.rentz.service.ReservationService;
+import com.example.rentz.service.UserService;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,15 +20,19 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/reservations")
-@AutoConfiguration
 public class ReservationController {
 
     private final ReservationMapper reservationMapper;
     private final ReservationService reservationService;
 
-    public ReservationController(ReservationMapper reservationMapper, ReservationService reservationService) {
+    private final UserService userService;
+    private final ItemService itemService;
+
+    public ReservationController(ReservationMapper reservationMapper, ReservationService reservationService, UserService userService, ItemService itemService) {
         this.reservationMapper = reservationMapper;
         this.reservationService = reservationService;
+        this.userService = userService;
+        this.itemService = itemService;
     }
 
     @GetMapping
@@ -51,10 +59,12 @@ public class ReservationController {
     @PostMapping
     public ResponseEntity<ReservationDto> createReservation(@RequestBody ReservationCreateDto reservationCreateDto) {
 
-
+        User user = this.userService.getUserById(reservationCreateDto.getOwnerId()).orElseThrow(() -> new ResourceNotFoundException("User not found!"));
+        Item item = this.itemService.getItemById(reservationCreateDto.getOwnerId()).orElseThrow(() -> new ResourceNotFoundException("Item not found!"));
 
         Reservation reservation = reservationMapper.toReservation(reservationCreateDto);
-
+        reservation.setOwner(user);
+        reservation.setItem(item);
         Reservation createdReservation = reservationService.createReservation(reservation);
 
         return new ResponseEntity<>(this.reservationMapper.toReservationDto(createdReservation), HttpStatus.CREATED);

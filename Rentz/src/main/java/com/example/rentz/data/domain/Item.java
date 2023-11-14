@@ -5,15 +5,13 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Table(name = "ITEMS")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Item {
 
     @Id
@@ -23,7 +21,6 @@ public class Item {
     @NotBlank
     private String title;
 
-    @Lob
     @NotBlank
     private String description;
 
@@ -37,14 +34,12 @@ public class Item {
 //    private List<String> pictures;
 
     @NotBlank
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
+    //@MapsId("owner_id")
     private User owner;
 
-     @JsonIgnore
-     @OneToMany(mappedBy = "bookedItem")
-     private List<Reservation> reservations = new ArrayList<>();
-
-   // @OneToOne(cascade = CascadeType.ALL)
-    //private User rented;
+//    @JsonIgnore
+//    @OneToOne(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private Reservation reservation;
 }
