@@ -1,0 +1,80 @@
+.overview-page {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.item {
+  width: 300px;
+  margin: 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 15px 10px;
+
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  &:hover {
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.35);
+    cursor: pointer;
+  }
+
+  img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+  }
+
+  h3 {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  p {
+    font-size: 14px;
+  }
+}
+
+
+.center {
+  margin: auto;
+  width: 60%;
+  padding: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+  z-index: 10; /* Position the popup above all elements */
+  display: none; /* Initially hide the popup */
+}
+
+.popup.show {
+  display: block; /* Show the popup when the 'show' class is added */
+}
+
+.popup .center {
+  position: absolute; /* Center the popup content */
+  top: 50%; /* Vertically center the popup content */
+  left: 50%;
+  transform: translate(-50%, -50%); /* Translate the popup content to the center */
+  background-color: white; /* White background for the popup content */
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+#close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+/* Prevent scrolling when the popup is open */
+.popup {
+  overflow-y: hidden;
+}

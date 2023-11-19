@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {SidebarService} from "./shared/service/sidebar.service";
+
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,19 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'new-proj';
+  title = 'angular-pro-sidebar';
+  constructor(public sidebarservice: SidebarService) { }
+  toggleSidebar() {
+    this.sidebarservice.setSidebarState(!this.sidebarservice.getSidebarState());
+  }
+  toggleBackgroundImage() {
+    this.sidebarservice.hasBackgroundImage = !this.sidebarservice.hasBackgroundImage;
+  }
+  getSideBarState() {
+    return this.sidebarservice.getSidebarState();
+  }
+
+  hideSidebar() {
+    this.sidebarservice.setSidebarState(true);
+  }
 }

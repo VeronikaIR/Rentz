@@ -3,16 +3,22 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { OverviewPageComponent } from './overview-page/overview-page.component';
+import { OverviewPageComponent } from './overview/overview-page/overview-page.component';
+import {LoginComponent} from "./login/login/login.component";
+import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import {NgOptimizedImage} from "@angular/common";
 
 @NgModule({
   declarations: [
     AppComponent,
-    OverviewPageComponent
+    OverviewPageComponent,
+    LoginComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgOptimizedImage
   ],
   providers: [],
   bootstrap: [AppComponent]

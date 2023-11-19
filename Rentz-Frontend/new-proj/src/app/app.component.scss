@@ -1,0 +1,94 @@
+//.app {
+//  display: flex;
+//  flex-direction: column;
+//  height: 100vh;
+//}
+
+//body {
+//  font-family: Arial, sans-serif;
+//  margin: 0;
+//  padding: 0;
+//  box-sizing: border-box;
+//  background-color: #ecf0f1; /* Light gray background color for the entire page */
+//}
+//
+//header {
+//  background-color: #333;
+//  color: #fff;
+//  text-align: center;
+//  padding: 10px;
+//}
+//
+//main {
+//  display: flex;
+//}
+
+//div.content {
+//  margin-left: 200px;
+//  padding: 1px 16px;
+//  height: 1000px;
+//}
+//
+//.original .panelNav{
+//  position:absolute;
+//}
+//.sidebar{
+//  height:200px;
+//}
+//
+//.main-content{
+//  height:200px;
+//}
+
+
+
+.page-wrapper {
+  height: 100vh;
+
+  .page-content {
+    display: inline-block;
+    width: 100%;
+    padding-top: 20px;
+    transition: padding-left .3s ease;
+
+    @media screen and (min-width: 768px) {
+      padding-left: 300px;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 998;
+      background: #000;
+      opacity: .5;
+      display: none;
+
+      &.show {
+
+        @media screen and (max-width: 768px) {
+          display: block;
+        }
+      }
+    }
+  }
+
+  .sidebar {
+    left: 0px;
+  }
+
+  .attribution{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 5px;
+    margin: 5px;
+    letter-spacing: 1px;
+  }
+}
+
+.overview-page {
+  padding: 20px 25px;
+}
