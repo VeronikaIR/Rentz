@@ -1,25 +1,121 @@
 <div class="overview-page">
   <div class="item" *ngFor="let item of items">
-    <img src="{{ item.picture }}" alt="{{ item.title }}" fill="">
-    <h3>{{ item.title }}</h3>
+    <img [src]="item.picture" alt="{{ item.title }}">
+    <h2>{{ item.title }}</h2>
     <p>{{ item.description }}</p>
-    <button (click)="showHideForm()">View Item</button>
+<!--    <button (click)="showItemInfo()">View Item</button>-->
+    <button class="submit-btn"  (click)="showItemInfo()">View Item</button>
+  </div>
+</div>
+<div class="popup" [ngClass]="{'show': showItemInformation}">
+
+  <div class="center">
+    <button id="close" (click)="showItemInfo()">X</button>
+    <div class="item-page" [class.flipped]="isFlipped">
+      <div class="item-front">
+        <h1>Title of the Item</h1>
+
+        <!-- Three pictures in one line -->
+        <div class="picture-container">
+          <img src='https://picsum.photos/200/300' alt="Picture 1">
+          <img src='https://picsum.photos/200/300' alt="Picture 2">
+          <img src='https://picsum.photos/200/300' alt="Picture 3">
+        </div>
+
+        <p>Description of the item goes here.</p>
+
+        <div class="price-info">
+          <p>Price per day: $XX.XX</p>
+        </div>
+
+        <div class="owner-info">
+          <h2>Owner Information</h2>
+          <p>Name: John Doe</p>
+          <p>Phone Number: XXX-XXX-XXXX</p>
+          <p>Town: Sample Town</p>
+        </div>
+
+        <!-- Button to show the reservation calendar -->
+        <button id="reserveButton1" (click)="flip()">Reserve</button>
+      </div>
+
+      <div class="item-back" *ngIf="showItemInformation">
+        <div id="booking" class="section">
+          <div class="section-center">
+            <div class="container">
+              <div class="row">
+                  <div class="booking-cta">
+                    <h1>Make your reservation</h1>
+                  </div>
+                <div>
+                  <div class="booking-form">
+                    <form>
+                      <div class="form-group">
+                        <span class="form-label">Your Destination</span>
+                        <input class="form-control" type="text" placeholder="Enter a destination or hotel name">
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                            <span class="form-label">Check In</span>
+                            <input class="form-control" type="date" required>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                            <span class="form-label">Check out</span>
+                            <input class="form-control" type="date" required>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-4">
+                          <div class="form-group">
+                            <span class="form-label">Rooms</span>
+                            <select class="form-control">
+                              <option>1</option>
+                              <option>2</option>
+                              <option>3</option>
+                            </select>
+                            <span class="select-arrow"></span>
+                          </div>
+                        </div>
+                        <div class="col-sm-4">
+                          <div class="form-group">
+                            <span class="form-label">Adults</span>
+                            <select class="form-control">
+                              <option>1</option>
+                              <option>2</option>
+                              <option>3</option>
+                            </select>
+                            <span class="select-arrow"></span>
+                          </div>
+                        </div>
+                        <div class="col-sm-4">
+                          <div class="form-group">
+                            <span class="form-label">Children</span>
+                            <select class="form-control">
+                              <option>0</option>
+                              <option>1</option>
+                              <option>2</option>
+                            </select>
+                            <span class="select-arrow"></span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-btn">
+                        <button class="submit-btn">Check availability</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
   </div>
 </div>
 
-<div class="popup" [ngClass]="{'show': showForm}">
-  <div class="center">
-    <button id="close" (click)="showHideForm()">X</button>
-    <form action="/action_page.php">
-      First name:<br>
-      <input type="text" name="firstname" value="Mickey">
-      <br>
-      Last name:<br>
-      <input type="text" name="lastname" value="Mouse">
-      <br><br>
-      <input type="submit" value="Submit">
-    </form>
-  </div>
-</div>
 
 

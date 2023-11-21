@@ -7,6 +7,7 @@ import { OverviewPageComponent } from './overview/overview-page/overview-page.co
 import {LoginComponent} from "./login/login/login.component";
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import {NgOptimizedImage} from "@angular/common";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import {NgOptimizedImage} from "@angular/common";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
