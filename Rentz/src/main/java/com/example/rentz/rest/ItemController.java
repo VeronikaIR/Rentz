@@ -1,5 +1,6 @@
 package com.example.rentz.rest;
 
+import com.example.rentz.data.ItemType;
 import com.example.rentz.data.domain.Item;
 import com.example.rentz.data.domain.User;
 import com.example.rentz.dto.request.ItemCreateDto;
@@ -8,7 +9,6 @@ import com.example.rentz.exception.ResourceNotFoundException;
 import com.example.rentz.mapper.ItemMapper;
 import com.example.rentz.service.ItemService;
 import com.example.rentz.service.UserService;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,6 +50,17 @@ public class ItemController {
                 .orElseThrow(() -> new ResourceNotFoundException("Item not found"));
 
         return ResponseEntity.ok(this.itemMapper.toItemDto(item));
+    }
+
+    @GetMapping("/filter")
+        public ResponseEntity<List<ItemDto>> getItemsByCategory(@RequestParam ItemType type) {
+
+        List<ItemDto> itemDtoList = new ArrayList<>();
+        itemService.getItemsByItemType(type).forEach(item -> {
+            itemDtoList.add(itemMapper.toItemDto(item));
+        });
+
+        return ResponseEntity.ok(itemDtoList);
     }
 
     @PostMapping

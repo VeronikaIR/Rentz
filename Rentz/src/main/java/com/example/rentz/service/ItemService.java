@@ -1,5 +1,6 @@
 package com.example.rentz.service;
 
+import com.example.rentz.data.ItemType;
 import com.example.rentz.data.domain.Item;
 import com.example.rentz.data.repository.ItemRepository;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ public class ItemService {
     public List<Item> getAllItems() {
         return itemRepository.findAll();
     }
+
+    public List<Item> getItemsByItemType(ItemType itemType){return itemRepository.findByItemType(itemType);}
 
     public Optional<Item> getItemById(Long id) {
         return itemRepository.findById(id);

@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import {User} from "../models/user";
+import {catchError, Observable, of} from "rxjs";
+import {HttpClient} from "@angular/common/http";
 
 
 @Injectable({
@@ -7,14 +9,17 @@ import {User} from "../models/user";
 })
 export class AuthService {
 
-  constructor() {
+  private apiUrl = 'http://localhost:8080/api/users';
+
+  constructor(private http: HttpClient) {
   }
 
-  getUser(): User {
-    return {
-      id: 1,
-      name: 'John Doe',
-      email: 'johndoe@example.com'
-    };
+  getUserById(userId: string): Observable<User | null> {
+    return this.http.get<User>(`${this.apiUrl}/${userId}`).pipe(
+      catchError((error) => {
+        console.error(`Failed to fetch user with id ${userId}:`, error);
+        return of(null);
+      })
+    );
   }
 }

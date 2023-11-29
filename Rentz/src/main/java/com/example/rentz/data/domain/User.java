@@ -36,6 +36,13 @@ public class User {
     @NotBlank
     private String personalInformation;
 
+    @NotBlank
+    private String phoneNumber;
+
+    @NotBlank
+    private String town;
+
+
     //TODO add profilePictureId later
 //    @NotBlank
 //    private Long profilePictureId;

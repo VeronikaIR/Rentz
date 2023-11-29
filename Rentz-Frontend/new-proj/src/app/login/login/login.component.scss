@@ -1,4 +1,77 @@
-*{
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap");
+
+h1 {
+  text-align: center;
+  color: white;
+  text-transform: uppercase;
+  padding: 1px;
+  font-family: "Raleway", cursive;
+  font-weight: 100;
+  position: relative;
+  width: 100%;
+  font-weight: bold;
+  //background: linear-gradient(to right, black, #eee, black);
+  white-space: nowrap;
+}
+
+h1::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -50px;
+  width: 600px;
+  margin-left: -300px;
+  margin-top: -220px;
+  height: 600px;
+  //background: radial-gradient(ellipse closest-side, #444, black);
+  z-index: -1;
+}
+
+h1 a {
+  // background: black;
+  display: block;
+  padding: 50px 20px;
+  text-decoration: none;
+  letter-spacing: 30px;
+  color: white;
+  animation: comein 1.5s 1 ease-in-out forwards;
+}
+
+@keyframes comein {
+  0% {
+    letter-spacing: 80px;
+    color:black;
+  }
+  70% {
+    letter-spacing: 20px;
+  }
+  100% {
+    letter-spacing: 25px;
+    color: black;
+  }
+}
+
+
+.app-description {
+
+  padding: 15px;
+  margin: 0px 30px;
+  border: 0px solid rgba(100, 100, 100, 1);
+  border-radius: 16px;
+  background: linear-gradient(
+      25deg,
+      rgba(255, 255, 255, 0.71) 100%,
+      rgba(255, 255, 255, 0.71) 100%,
+      rgba(255, 255, 255, 0.22) 100%
+  );
+  //background-blend-mode: ;
+  box-shadow: 0px 4px 24px 21px rgba(0, 0, 0, 0.21);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+
+}
+
+* {
   list-style: none;
   text-decoration: none;
   margin: 0;
@@ -7,16 +80,17 @@
   font-family: 'Open Sans', sans-serif;
 }
 
-body{
+body {
   background: #f5f6fa;
 }
 
-.wrapper .sidebar{
-  background: rgb(5, 68, 104);
+.wrapper .sidebar {
+  background: url('/assets/images/Fondo lindo.jpeg')  no-repeat center center / cover;
   position: fixed;
+  //filter: brightness(50%);
   top: 0;
   left: 0;
-  width: 300px;
+  width: 450px;
   height: 100%;
   padding: 78px 0;
   transition: all 0.5s ease;
@@ -24,12 +98,12 @@ body{
 
 //----------- profile picture scss ---------------------
 
-.wrapper .sidebar .profile{
+.wrapper .sidebar .profile {
   margin-bottom: 30px;
   text-align: center;
 }
 
-.wrapper .sidebar .profile img{
+.wrapper .sidebar .profile img {
   display: block;
   width: 100px;
   height: 100px;
@@ -37,19 +111,18 @@ body{
   margin: 0 auto;
 }
 
-.wrapper .sidebar .profile h3{
+.wrapper .sidebar .profile h3 {
   color: #ffffff;
   margin: 10px 0 5px;
 }
 
-.wrapper .sidebar .profile p{
+.wrapper .sidebar .profile p {
   color: rgb(206, 240, 253);
   font-size: 14px;
 }
 
 
-
-.wrapper .sidebar ul li a{
+.wrapper .sidebar ul li a {
   display: block;
   padding: 13px 30px;
   border-bottom: 1px solid #10558d;
@@ -58,7 +131,7 @@ body{
   position: relative;
 }
 
-.wrapper .sidebar ul li a .icon{
+.wrapper .sidebar ul li a .icon {
   color: #dee4ec;
   width: 30px;
   display: inline-block;
@@ -66,34 +139,31 @@ body{
 
 
 .wrapper .sidebar ul li a:hover,
-.wrapper .sidebar ul li a.active{
+.wrapper .sidebar ul li a.active {
   color: #0c7db1;
 
-  background:white;
+  background: white;
   border-right: 2px solid rgb(5, 68, 104);
 }
 
 .wrapper .sidebar ul li a:hover .icon,
-.wrapper .sidebar ul li a.active .icon{
+.wrapper .sidebar ul li a.active .icon {
   color: #0c7db1;
 }
 
 .wrapper .sidebar ul li a:hover:before,
-.wrapper .sidebar ul li a.active:before{
+.wrapper .sidebar ul li a.active:before {
   display: block;
 }
 
 
-
-
-
-.wrapper .section{
+.wrapper .section {
   width: calc(100% - 225px);
   margin-left: 225px;
   transition: all 0.5s ease;
 }
 
-.wrapper .section .top_navbar{
+.wrapper .section .top_navbar {
   background: rgb(7, 105, 185);
   height: 50px;
   display: flex;
@@ -102,13 +172,16 @@ body{
 
 }
 
-.wrapper .section .top_navbar .hamburger a{
+.wrapper .section .top_navbar .hamburger a {
   font-size: 28px;
   color: #f4fbff;
 }
 
-.wrapper .section .top_navbar .hamburger a:hover{
+.wrapper .section .top_navbar .hamburger a:hover {
   color: #a2ecff;
 }
+
+
+
 
 

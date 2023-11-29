@@ -1,5 +1,6 @@
 package com.example.rentz.dto.request;
 
+import com.example.rentz.data.ItemType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -31,5 +32,8 @@ public class ItemCreateDto {
 
     @NotBlank
     private Long ownerId;
+
+    @NotBlank
+    private ItemType itemType;
 
 }

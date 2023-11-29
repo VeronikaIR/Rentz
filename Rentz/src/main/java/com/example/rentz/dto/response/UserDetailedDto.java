@@ -11,5 +11,7 @@ public class UserDetailedDto {
     private Long id;
     private String name;
     private String email;
+    private String phoneNumber;
+    private String town;
     private String personalInformation;
 }

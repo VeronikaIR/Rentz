@@ -1,19 +1,20 @@
 <div class="overview-page">
-  <div class="item" *ngFor="let item of items">
-    <img [src]="item.picture" alt="{{ item.title }}">
+  <div class="item" *ngFor="let item of this.itemService.filteredItems ">
+    <img src='https://picsum.photos/200/300' alt="{{ item.title }}">
     <h2>{{ item.title }}</h2>
     <p>{{ item.description }}</p>
-<!--    <button (click)="showItemInfo()">View Item</button>-->
-    <button class="submit-btn"  (click)="showItemInfo()">View Item</button>
+    <!--    <button (click)="showItemInfo()">View Item</button>-->
+    <button class="submit-btn" (click)="showItemInfo(item)">View Item</button>
   </div>
 </div>
-<div class="popup" [ngClass]="{'show': showItemInformation}">
+<div class="popup" [ngClass]="{'show': isPageLoaded && showItemInformation}">
 
   <div class="center">
-    <button id="close" (click)="showItemInfo()">X</button>
-    <div class="item-page" [class.flipped]="isFlipped">
+    <button id="close" (click)="closeItemInfo()">X</button>
+    <div *ngIf="isPageLoaded" class="item-page" [class.flipped]="isFlipped">
+
       <div class="item-front">
-        <h1>Title of the Item</h1>
+        <h1>{{this.selectedItem?.title}}</h1>
 
         <!-- Three pictures in one line -->
         <div class="picture-container">
@@ -21,18 +22,18 @@
           <img src='https://picsum.photos/200/300' alt="Picture 2">
           <img src='https://picsum.photos/200/300' alt="Picture 3">
         </div>
-
-        <p>Description of the item goes here.</p>
-
+        <div class="description-container">
+          <p>{{this.selectedItem?.description}}</p>
+        </div>
         <div class="price-info">
-          <p>Price per day: $XX.XX</p>
+          <p>Price per day: ${{this.selectedItem?.priceForDay}}</p>
         </div>
 
         <div class="owner-info">
           <h2>Owner Information</h2>
-          <p>Name: John Doe</p>
-          <p>Phone Number: XXX-XXX-XXXX</p>
-          <p>Town: Sample Town</p>
+          <p>Name: {{this.selectedUser.name}}</p>
+          <p>Phone Number: {{this.selectedUser.phoneNumber}}</p>
+          <p>Town: {{this.selectedUser.town}}</p>
         </div>
 
         <!-- Button to show the reservation calendar -->
@@ -44,61 +45,68 @@
           <div class="section-center">
             <div class="container">
               <div class="row">
-                  <div class="booking-cta">
-                    <h1>Make your reservation</h1>
-                  </div>
+                <div class="booking-cta">
+                  <h1>Make your reservation</h1>
+                </div>
                 <div>
                   <div class="booking-form">
-                    <form>
+                    <form [formGroup]="reservationForm">
                       <div class="form-group">
-                        <span class="form-label">Your Destination</span>
+                        <span class="form-label">Your Names</span>
                         <input class="form-control" type="text" placeholder="Enter a destination or hotel name">
                       </div>
                       <div class="row">
                         <div class="col-sm-6">
                           <div class="form-group">
-                            <span class="form-label">Check In</span>
-                            <input class="form-control" type="date" required>
+                            <span class="form-label">Town</span>
+                            <input class="form-control" required>
                           </div>
                         </div>
                         <div class="col-sm-6">
                           <div class="form-group">
-                            <span class="form-label">Check out</span>
-                            <input class="form-control" type="date" required>
+                            <span class="form-label">Phone</span>
+                            <input class="form-control" required/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-8">
+                          <div class="form-group">
+                            <span class="form-label">Dates</span>
+                            <!--                            <input class="form-control" type="date" required>-->
+                            <div class="form-group">
+                            </div>
+
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="form-group">
+                              <span class="form-label">Price</span>
+                              <input class="form-control" required>
+                            </div>
                           </div>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-sm-4">
                           <div class="form-group">
-                            <span class="form-label">Rooms</span>
-                            <select class="form-control">
-                              <option>1</option>
-                              <option>2</option>
-                              <option>3</option>
-                            </select>
+                            <span class="form-label">Card number</span>
+                            <input class="form-control" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}"
+                                   autocomplete="cc-number" maxlength="19" placeholder="xxxx xxxx xxxx xxxx"
+                                   required>
                             <span class="select-arrow"></span>
                           </div>
                         </div>
                         <div class="col-sm-4">
                           <div class="form-group">
-                            <span class="form-label">Adults</span>
-                            <select class="form-control">
-                              <option>1</option>
-                              <option>2</option>
-                              <option>3</option>
-                            </select>
-                            <span class="select-arrow"></span>
+                            <span class="form-label">Expiration Date</span>
+                            <input class="form-control" maxlength="7" placeholder="mm/yyyy" required/>
                           </div>
                         </div>
                         <div class="col-sm-4">
                           <div class="form-group">
-                            <span class="form-label">Children</span>
-                            <select class="form-control">
-                              <option>0</option>
-                              <option>1</option>
-                              <option>2</option>
-                            </select>
+                            <span class="form-label">CVV</span>
+                            <input class="form-control" maxlength="3" placeholder="XXX" required/>
+
                             <span class="select-arrow"></span>
                           </div>
                         </div>
@@ -113,9 +121,7 @@
             </div>
           </div>
         </div>
+      </div>
     </div>
   </div>
 </div>
-
-
-

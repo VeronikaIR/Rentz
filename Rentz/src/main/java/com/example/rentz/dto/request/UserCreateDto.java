@@ -26,4 +26,9 @@ public class UserCreateDto {
     @NotBlank
     private String personalInformation;
    // private Long profilePictureId;
+
+    @NotBlank
+    private String phoneNumber;
+
+    private String town;
 }

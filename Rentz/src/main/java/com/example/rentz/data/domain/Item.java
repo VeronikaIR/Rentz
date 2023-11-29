@@ -1,9 +1,14 @@
 package com.example.rentz.data.domain;
 
+import com.example.rentz.data.ItemType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "ITEMS")
@@ -30,6 +35,9 @@ public class Item {
     @NotBlank
     private Double priceForDay;
 
+    @NotBlank
+    private ItemType itemType;
+
 //    @NotBlank
 //    private List<String> pictures;
 
@@ -42,4 +50,7 @@ public class Item {
 //    @JsonIgnore
 //    @OneToOne(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
 //    private Reservation reservation;
+
+    @ElementCollection
+    private List<LocalDate> totalDates = new ArrayList<>();
 }
