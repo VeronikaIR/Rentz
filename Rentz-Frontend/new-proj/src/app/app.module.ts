@@ -15,6 +15,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {HttpClientModule} from "@angular/common/http";
 import {environment} from "../environments/environment";
+import {Auth} from "@angular/fire/auth";
+import {AuthService} from "./login/service/auth.service";
 
 @NgModule({
   declarations: [
@@ -35,7 +37,7 @@ import {environment} from "../environments/environment";
     AngularFireAuthModule
 
   ],
-  providers: [MatDatepickerModule],
+  providers: [MatDatepickerModule, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

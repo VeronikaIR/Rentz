@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {User} from "../models/user";
-import {catchError, from, Observable, of, throwError} from "rxjs";
+import {catchError, from, Observable, of} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 
@@ -24,43 +24,11 @@ export class AuthService {
     );
   }
 
-  signIn(params: SignIn): Observable<any> {
-    return from(this.auth.signInWithEmailAndPassword(
-      params.email, params.password
-    )).pipe(
-      catchError((error: FirebaseError) =>
-        throwError(() => new Error(this.translateFirebaseErrorMessage(error)))
-      )
-    );
+  login(username: string, password: string) {
+    return this.auth.signInWithEmailAndPassword(username, password);
   }
 
-  recoverPassword(email: string): Observable<void> {
-    return from(this.auth.sendPasswordResetEmail(email)).pipe(
-      catchError((error: FirebaseError) =>
-        throwError(() => new Error(this.translateFirebaseErrorMessage(error)))
-      )
-    );
+  logout() {
+    return from(this.auth.signOut());
   }
-
-  private translateFirebaseErrorMessage({code, message}: FirebaseError) {
-    if (code === "auth/user-not-found") {
-      return "User not found.";
-    }
-    if (code === "auth/wrong-password") {
-      return "User not found.";
-    }
-    return message;
-  }
-
-}
-
-type SignIn = {
-  email: string;
-  password: string;
-}
-
-type FirebaseError = {
-  code: string;
-  message: string
-}
 }

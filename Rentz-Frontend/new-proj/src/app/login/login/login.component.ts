@@ -1,5 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AuthService} from "../service/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
   isLoggingIn = false;
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private authService: AuthService
   ) {
   }
 
@@ -27,31 +29,36 @@ export class LoginComponent implements OnInit {
 
 
   onSubmit() {
-    if (this.loginForm.valid) {
-      // Handle login logic here
-      console.log('Login successful!', this.loginForm.value);
-    } else {
-      // Form is invalid, mark fields as touched to display validation errors
-      this.loginForm.markAllAsTouched();
+    if (!this.loginForm.valid) {
+      return;
     }
+
+    const {email, password} = this.loginForm.value;
+    // this.authService.login(email, password).then(() => {
+    //   console.log("successful login");
+    // })
+
+    this.authService.login(email, password).then(() => {
+      console.log("successful login");
+    })
   }
 
 
   login() {
     this.isLoggingIn = true;
 
-    this.authenticationService.signIn({
-      email: this.form.value.email,
-      password: this.form.value.password
-    }).subscribe({
-      next: () => this.router.navigate(['home']),
-      error: error => {
-        this.isLoggingIn = false;
-        this.snackBar.open(error.message, "OK", {
-          duration: 5000
-        })
-      }
-    });
+    // this.authenticationService.signIn({
+    //   email: this.form.value.email,
+    //   password: this.form.value.password
+    // }).subscribe({
+    //   next: () => this.router.navigate(['home']),
+    //   error: error => {
+    //     this.isLoggingIn = false;
+    //     this.snackBar.open(error.message, "OK", {
+    //       duration: 5000
+    //     })
+    //   }
+    // });
   }
 
 
