@@ -8,19 +8,19 @@ import com.google.firebase.auth.FirebaseToken;
 
 public class FirebaseAdmin {
 
-    private static FirebaseAuth firebaseAuth;
-
-    public static void initialize() {
-        try {
-            FirebaseApp.initializeApp(GoogleCredentials.getApplicationDefaultInstance());
-            firebaseAuth = FirebaseAuth.getInstance();
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to initialize Firebase Admin", e);
-        }
-    }
-
-    public static FirebaseToken verifyIdToken(String idToken) throws FirebaseAuthException {
-        return firebaseAuth.verifyIdToken(idToken);
-    }
+//    private static FirebaseAuth firebaseAuth;
+//
+//    public static void initialize() {
+//        try {
+//            FirebaseApp.initializeApp(GoogleCredentials.getApplicationDefaultInstance());
+//            firebaseAuth = FirebaseAuth.getInstance();
+//        } catch (Exception e) {
+//            throw new RuntimeException("Failed to initialize Firebase Admin", e);
+//        }
+//    }
+//
+//    public static FirebaseToken verifyIdToken(String idToken) throws FirebaseAuthException {
+//        return firebaseAuth.verifyIdToken(idToken);
+//    }
 }
 

@@ -45,6 +45,14 @@ public class UserController {
         return ResponseEntity.ok(this.userMapper.toUserDetailedDto(user));
     }
 
+    @GetMapping("/info")
+    public ResponseEntity<UserDetailedDto> getUserInfo(@PathVariable Long id) {
+        User user = userService.getUserById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        return ResponseEntity.ok(this.userMapper.toUserDetailedDto(user));
+    }
+
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDetailedDto> createUser(@RequestBody UserCreateDto userCreateDto) {
 
