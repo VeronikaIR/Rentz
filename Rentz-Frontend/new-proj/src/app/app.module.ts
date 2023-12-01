@@ -13,10 +13,10 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatDatepickerModule} from "@angular/material/datepicker";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {environment} from "../environments/environment";
-import {Auth} from "@angular/fire/auth";
 import {AuthService} from "./login/service/auth.service";
+import {AuthInterceptor} from "./login/interceptors/auth.interceptor";
 
 @NgModule({
   declarations: [
@@ -37,7 +37,11 @@ import {AuthService} from "./login/service/auth.service";
     AngularFireAuthModule
 
   ],
-  providers: [MatDatepickerModule, AuthService],
+  providers: [MatDatepickerModule, AuthService, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

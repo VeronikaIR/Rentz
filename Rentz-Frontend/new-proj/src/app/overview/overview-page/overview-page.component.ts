@@ -87,18 +87,18 @@ export class OverviewPageComponent implements OnInit {
 
   public showItemInfo(item: Item): void {
     this.selectedItem = item;
-    this.authService.getUserById(item.ownerId).subscribe((user) => {
-      if (user) {
-
-        this.selectedUser = user;
-        this.isPageLoaded = true;
-        // this.showItemInformation = !this.showItemInformation;
-        this.showItemInformation =true;
-
-      }
-    }, error => {
-      console.error('Error fetching user');
-    });
+    // this.authService.getUserById(item.ownerId).subscribe((user) => {
+    //   if (user) {
+    //
+    //     this.selectedUser = user;
+    //     this.isPageLoaded = true;
+    //     // this.showItemInformation = !this.showItemInformation;
+    //     this.showItemInformation =true;
+    //
+    //   }
+    // }, error => {
+    //   console.error('Error fetching user');
+    // });
   }
 
   public closeItemInfo() : void {

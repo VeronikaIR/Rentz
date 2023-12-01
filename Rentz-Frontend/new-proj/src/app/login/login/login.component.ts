@@ -1,6 +1,7 @@
 import {Component, OnInit} from "@angular/core";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../service/auth.service";
+import {UserService} from "../service/user.service";
 
 @Component({
   selector: 'app-login',
@@ -14,9 +15,13 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   isLoggingIn = false;
 
+  signupForm!: FormGroup;
+
+
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private userService: UserService
   ) {
   }
 
@@ -25,52 +30,80 @@ export class LoginComponent implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required]
     });
+
+    //registration form
+    this.createForm();
   }
-
-
-  onSubmit() {
-    if (!this.loginForm.valid) {
-      return;
-    }
-
-    const {email, password} = this.loginForm.value;
-    // this.authService.login(email, password).then(() => {
-    //   console.log("successful login");
-    // })
-
-    this.authService.login(email, password).then(() => {
-      console.log("successful login");
-    })
-  }
-
-
-  login() {
-    this.isLoggingIn = true;
-
-    // this.authenticationService.signIn({
-    //   email: this.form.value.email,
-    //   password: this.form.value.password
-    // }).subscribe({
-    //   next: () => this.router.navigate(['home']),
-    //   error: error => {
-    //     this.isLoggingIn = false;
-    //     this.snackBar.open(error.message, "OK", {
-    //       duration: 5000
-    //     })
-    //   }
-    // });
-  }
-
 
   toggleRegister() {
     this.showRegisterForm = !this.showRegisterForm;
   }
 
+  /**
+   * login with email and password
+   * */
+  onSubmit() {
+    if (!this.loginForm.valid) {
+      return;
+    }
+    const {email, password} = this.loginForm.value;
+
+
+    this.authService.login(email, password);
+
+
+
+    // .then((user) => {
+    //   if (user) {
+    //     debugger;
+    //     this.userService.getUserInfo().subscribe((userDB) => {
+    //       if (userDB) {
+    //         this.userService.setUser(userDB);
+    //       }
+    //     })
+    //   }
+    // })
+  }
+
 
   loginWithGoogle() {
     // Implement Google login logic here
-    console.log('Logging in with Google');
+    this.authService.googleAuth().then((x) => {
+      console.log('Logging in with Google');
+      console.log(x);
+    });
+
     // You may want to use a service for Google authentication or an external library.
+  }
+
+  signup() {
+
+    // if (this.signupForm.valid) {
+    //
+    //   this.authService.SignUp(
+    //
+    //     this.signupForm.value.email,
+    //
+    //     this.signupForm.value.password
+    //
+    //   );
+    //
+    // }
+
+  }
+
+  createForm() {
+
+    this.signupForm = new FormGroup({
+      email: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required),
+      confirmPassword: new FormControl('', Validators.required),
+      names: new FormControl('', Validators.required),
+      phoneNumber: new FormControl('', Validators.required),
+      personalInformation: new FormControl('', Validators.required),
+      town: new FormControl('', Validators.required)
+    });
+
   }
 
 }

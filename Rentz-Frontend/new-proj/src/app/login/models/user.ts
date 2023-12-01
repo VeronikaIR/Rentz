@@ -3,5 +3,8 @@ export interface User {
   name: string;
   email: string;
   phoneNumber: string;
-  town: string;
+  town?: string;
+  photoURL: string;
+
+  //photo url ??????????
 }
