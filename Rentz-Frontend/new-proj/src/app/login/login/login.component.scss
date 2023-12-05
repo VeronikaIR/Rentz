@@ -1,57 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap");
 
-//h1 {
-//  text-align: center;
-//  color: white;
-//  text-transform: uppercase;
-//  padding: 1px;
-//  font-family: "Raleway", cursive;
-//  font-weight: 100;
-//  position: relative;
-//  width: 100%;
-//  font-weight: bold;
-//  //background: linear-gradient(to right, black, #eee, black);
-//  white-space: nowrap;
-//}
-//
-//h1::before {
-//  content: "";
-//  position: absolute;
-//  left: 50%;
-//  top: -50px;
-//  width: 600px;
-//  margin-left: -300px;
-//  margin-top: -220px;
-//  height: 600px;
-//  //background: radial-gradient(ellipse closest-side, #444, black);
-//  z-index: -1;
-//}
-//
-//h1 a {
-//  // background: black;
-//  display: block;
-//  padding: 50px 20px;
-//  text-decoration: none;
-//  letter-spacing: 30px;
-//  color: white;
-//  animation: comein 1.5s 1 ease-in-out forwards;
-//}
-//
-//@keyframes comein {
-//  0% {
-//    letter-spacing: 80px;
-//    color: black;
-//  }
-//  70% {
-//    letter-spacing: 20px;
-//  }
-//  100% {
-//    letter-spacing: 25px;
-//    color: black;
-//  }
-//}
-
-
 /* Add this to your CSS file */
 
 .welcome-header {
@@ -110,7 +58,7 @@ body {
   left: 0;
   width: 450px;
   height: 100%;
-  padding: 78px 0;
+  //padding: 40px 0;
   transition: all 0.5s ease;
 }
 
@@ -119,6 +67,7 @@ body {
 .wrapper .sidebar .profile {
   margin-bottom: 30px;
   text-align: center;
+
 }
 
 .wrapper .sidebar .profile img {
@@ -343,5 +292,163 @@ button:hover {
 
 .google-login button:hover {
   background: linear-gradient(to right, #4285f4, #34a853, #fbbc05, #ea4335);
+}
+
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> profile
+.side-bar {
+  padding-bottom: 30px;
+  background: white;
+  height: 1000px;
+  border: #dee2e6 1px solid;
+
+  .user-info {
+    text-align: center;
+    margin-bottom: 15px;
+    padding: 30px;
+    color: #616670;
+    border-bottom: 1px solid #f3f3f3;
+
+    img {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 15px;
+      border-radius: 100px;
+    }
+
+    .meta li {
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .side-menu {
+    text-align: center;
+
+    .nav {
+      display: flex;
+      flex-direction: column; // Stack items vertically
+      padding-left: 30px;
+
+
+      > li {
+        font-size: 25px;
+        margin-bottom: 15px;
+        border: #dee2e6 1px solid;
+
+
+        > a {
+          display: inline-block;
+          width: 100%; // Make buttons take up full width
+          color: #9499a3;
+          padding: 10px;
+          border-bottom: 2px solid transparent;
+
+          &:hover {
+            color: #616670;
+            background: none;
+          }
+
+          &.active {
+            color: #40babd;
+            border-bottom: 2px solid #40babd;
+            background: none;
+            border-right: none;
+          }
+
+          .theme-2 &.active {
+            color: #6dbd63;
+            border-bottom-color: #6dbd63;
+          }
+
+          .theme-3 &.active {
+            color: #497cb1;
+            border-bottom-color: #497cb1;
+          }
+
+          .theme-4 &.active {
+            color: #ec6952;
+            border-bottom-color: #ec6952;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+// >>>>>>>>>>>>>>>> add item popup >>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+.popup-container {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.popup-content {
+  padding: 20px;
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.popup-header h2 {
+  margin: 0;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #999;
+}
+
+.item-form {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    margin-bottom: 5px;
+  }
+
+  input,
+  textarea,
+  select {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .submit-button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #2980b9;
+    }
+  }
 }
 

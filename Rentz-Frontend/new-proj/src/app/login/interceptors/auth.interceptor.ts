@@ -13,7 +13,7 @@ export class AuthInterceptor implements HttpInterceptor {
     let accessToken: string | undefined = this.authService.tokenAccess;
     debugger;
 
-    if (accessToken && !request.url.includes('overview')) {
+    if (accessToken && !request.url.includes('items')) {
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${accessToken}`

@@ -36,6 +36,15 @@ export class UserService {
     );
   }
 
+  socialLogin(): Observable<User | null> {
+    return this.http.get<User>(`${this.apiUrlUsers}/social-login`).pipe(
+      catchError((error) => {
+        console.error(`Failed to fetch user:`, error);
+        return of(null);
+      })
+    );
+  }
+
 
   setUser(user: User): void {
     this.userSubject.next(user);

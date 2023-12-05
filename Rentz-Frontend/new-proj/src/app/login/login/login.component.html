@@ -1,156 +1,152 @@
 <div class="wrapper">
   <!--Top menu -->
   <div class="sidebar">
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <!-- Update your HTML file -->
-
-    <h1 class="welcome-header">Welcome to RentZ,</h1>
-    <p>&nbsp;</p>
-    <p class="subtext">Create an account to post your ads or rent items.</p>
-
-    <div id="app">
-      <!--      <div class="title">-->
-      <!--        <h1><a href="#0">RentZ</a></h1>-->
-      <!--      </div>-->
-      <!--    </div>-->
-      <!--    <div class="app-description">-->
-      <!--      <span class="item">RentZ is your go-to platform for renting out unused items and discovering beneficial offerings from others.-->
-      <!--        <br/>-->
-      <!--        <br/>-->
-      <!--        <p style="font-weight: bold">Sign in</p> to unlock the ability to rent items and post your own advertisements.-->
-      <!--        </span>-->
-      <!--    </div>-->
-      <!--    <br/>-->
-      <!--    <br/>-->
-      <!--    <br/>-->
-      <!--    <br/>-->
-      <!--    <div class="app-description">-->
-      <!--    <span class="item">Sign up</span>-->
-      <!--    </div>-->
 
 
-      <!-- login.component.html -->
+    <!--    <ng-container *ngIf="!(userService.user$ | async) as user">-->
+    <!--      <p>&nbsp;</p>-->
+    <!--      <p>&nbsp;</p>-->
+    <!--      <h1 class="welcome-header">Welcome to RentZ,</h1>-->
+    <!--      <p>&nbsp;</p>-->
+    <!--      <p class="subtext">Create an account to post your ads or rent items.</p>-->
 
-      <!-- login.component.html -->
+    <!--      <div id="app">-->
 
-      <div class="login-container">
-        <div class="login-box">
-          <div *ngIf="!showRegisterForm">
-            <h2>Login</h2>
-            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <!--        &lt;!&ndash; login.component.html &ndash;&gt;-->
 
-              <div class="input-group">
-                <label for="email">Email</label>
-                <input formControlName="email" type="email" id="email" name="newEmail" required>
-                <div *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched"
-                     class="error-message">Email is required
-                </div>
-              </div>
+    <!--        <div class="login-container">-->
+    <!--          <div class="login-box">-->
+    <!--            <div *ngIf="!showRegisterForm">-->
+    <!--              <h2>Login</h2>-->
+    <!--              <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">-->
 
-
-              <div class="input-group">
-                <label for="newPassword">Password</label>
-                <input type="password" id="password" name="newPassword" formControlName="password" required>
-
-                <div *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched"
-                     class="error-message">Password is required
-                </div>
-              </div>
-
-              <button type="submit">Login</button>
-            </form>
-
-            <div class="separator">or</div>
+    <!--                <div class="input-group">-->
+    <!--                  <label for="email">Email</label>-->
+    <!--                  <input formControlName="email" type="email" id="email" name="newEmail" required>-->
+    <!--                  <div *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched"-->
+    <!--                       class="error-message">Email is required-->
+    <!--                  </div>-->
+    <!--                </div>-->
 
 
-            <div class="google-login">
-              <button (click)="loginWithGoogle()">Login with Google</button>
-            </div>
+    <!--                <div class="input-group">-->
+    <!--                  <label for="newPassword">Password</label>-->
+    <!--                  <input type="password" id="password" name="newPassword" formControlName="password" required>-->
 
-            <div class="register-link">
-              <p>Don't have an account? <a href="#" (click)="toggleRegister()">Register here</a></p>
-            </div>
-          </div>
-          <div *ngIf="showRegisterForm" class="register-form">
-            <h2>Register</h2>
-            <form>
-              <div class="input-group">
-                <label for="newUsername">New Username</label>
-                <input type="text" id="newUsername" name="newUsername" required>
-              </div>
-              <div class="input-group">
-                <label for="newPassword">New Password</label>
-                <input type="password" id="newPassword" name="newPassword" required>
-              </div>
+    <!--                  <div *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched"-->
+    <!--                       class="error-message">Password is required-->
+    <!--                  </div>-->
+    <!--                </div>-->
 
-              <button type="submit">Register</button>
-            </form>
-          </div>
+    <!--                <button type="submit">Login</button>-->
+    <!--              </form>-->
+
+    <!--              <div class="separator">or</div>-->
 
 
-        </div>
+    <!--              <div class="google-login">-->
+    <!--                <button (click)="loginWithGoogle()">Login with Google</button>-->
+    <!--              </div>-->
+
+    <!--              <div class="register-link">-->
+    <!--                <p>Don't have an account? <a href="#" (click)="toggleRegister()">Register here</a></p>-->
+    <!--              </div>-->
+    <!--            </div>-->
+    <!--            <div *ngIf="showRegisterForm" class="register-form">-->
+    <!--              <h2>Register</h2>-->
+    <!--              <form>-->
+    <!--                <div class="input-group">-->
+    <!--                  <label for="newUsername">New Username</label>-->
+    <!--                  <input type="text" id="newUsername" name="newUsername" required>-->
+    <!--                </div>-->
+    <!--                <div class="input-group">-->
+    <!--                  <label for="newPassword">New Password</label>-->
+    <!--                  <input type="password" id="newPassword" name="newPassword" required>-->
+    <!--                </div>-->
+
+    <!--                <button type="submit">Register</button>-->
+    <!--              </form>-->
+    <!--            </div>-->
+
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </ng-container>-->
+    <!--    <ng-container *ngIf="(userService.user$ | async) as user">-->
+
+
+    <!--      <div class="profile-container">-->
+    <!--        <div class="header-box">-->
+    <!--          <h1 class="project-name">Your Project Name</h1>-->
+    <!--        </div>-->
+    <!--        <div class="profile-info">-->
+    <!--          <div class="profile-picture"></div>-->
+    <!--          <h2 class="user-name">User Name</h2>-->
+    <!--          <p class="user-description">Short description about the user.</p>-->
+    <!--          <div class="buttons-container">-->
+    <!--            <button class="profile-button">Add New Item</button>-->
+    <!--            <button class="profile-button">My Reservations</button>-->
+    <!--            <button class="profile-button">My Items</button>-->
+    <!--            <button class="profile-button">Edit Profile</button>-->
+    <!--            <button class="logout-button">Logout</button>-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </div>-->
+
+
+    <!-- HTML -->
+    <!-- HTML -->
+    <div class="side-bar">
+      <div class="user-info">
+        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+        <ul class="meta list list-unstyled">
+          <li class="name" style="font-size: 20px">Rebecca Sanders
+          </li>
+        </ul>
       </div>
-
-
-      <!-- ========================= FOOTER END // ========================= -->
-      <!--    <div class="profile">-->
-      <!--      <img src="https://1.bp.blogspot.com/-vhmWFWO2r8U/YLjr2A57toI/AAAAAAAACO4/0GBonlEZPmAiQW4uvkCTm5LvlJVd_-l_wCNcBGAsYHQ/s16000/team-1-2.jpg" alt="profile_picture">-->
-      <!--      <h3>Anamika Roy</h3>-->
-      <!--      <p>Designer</p>-->
-      <!--    </div>-->
-
-
-      <!--    <ul>-->
-      <!--      <li>-->
-      <!--        <a href="#" class="active">-->
-      <!--          <span class="icon"><i class="fas fa-home"></i></span>-->
-      <!--          <span class="item">Home</span>-->
-      <!--        </a>-->
-      <!--      </li>-->
-      <!--      <li>-->
-      <!--        <a href="#">-->
-      <!--          <span class="icon"><i class="fas fa-desktop"></i></span>-->
-      <!--          <span class="item">My Dashboard</span>-->
-      <!--        </a>-->
-      <!--      </li>-->
-      <!--      <li>-->
-      <!--        <a href="#">-->
-      <!--          <span class="icon"><i class="fas fa-user-friends"></i></span>-->
-      <!--          <span class="item">People</span>-->
-      <!--        </a>-->
-      <!--      </li>-->
-      <!--      <li>-->
-      <!--        <a href="#">-->
-      <!--          <span class="icon"><i class="fas fa-tachometer-alt"></i></span>-->
-      <!--          <span class="item">Perfomance</span>-->
-      <!--        </a>-->
-      <!--      </li>-->
-      <!--      <li>-->
-      <!--        <a href="#">-->
-      <!--          <span class="icon"><i class="fas fa-database"></i></span>-->
-      <!--          <span class="item">Development</span>-->
-      <!--        </a>-->
-      <!--      </li>-->
-      <!--      <li>-->
-      <!--        <a href="#">-->
-      <!--          <span class="icon"><i class="fas fa-chart-line"></i></span>-->
-      <!--          <span class="item">Reports</span>-->
-      <!--        </a>-->
-      <!--      </li>-->
-      <!--      <li>-->
-      <!--        <a href="#">-->
-      <!--          <span class="icon"><i class="fas fa-user-shield"></i></span>-->
-      <!--          <span class="item">Admin</span>-->
-      <!--        </a>-->
-      <!--      </li>-->
-      <!--      <li>-->
-      <!--        <a href="#">-->
-      <!--          <span class="icon"><i class="fas fa-cog"></i></span>-->
-      <!--          <span class="item">Settings</span>-->
-      <!--        </a>-->
-      <!--      </li>-->
-      <!--    </ul>-->
+      <nav class="side-menu">
+        <ul class="nav" style=" text-align: left">
+          <li><a><span class="fa fa-credit-card"></span> 📝 Edit Profile</a></li>
+          <li class="active" (click)="addItemForRent()"><a href="#"><span class="fa fa-user"></span> ➕ Add item for rent
+          </a></li>
+          <li (click)="showUsersItemsForRent()"><a href="#"><span class="fa fa-envelope"></span> 🎮 My items for rent </a></li>
+          <li><a href="#"><span class="fa fa-cog"></span> 📆 My Reservations</a></li>
+          <li><a href="#"><span class="fa fa-clock-o"></span> 🏃 Logout</a></li>
+        </ul>
+      </nav>
     </div>
+
+    <!--    </ng-container>-->
+  </div>
+</div>
+
+
+<div *ngIf="addItemForRentOpened" class="popup-container">
+  <div class="popup-content">
+    <div class="popup-header">
+      <h2>Add Item 📎</h2>
+      <button class="close-button" (click)="closePopup()">×</button>
+    </div>
+    <form class="item-form">
+      <label for="item-title">Title:</label>
+      <input type="text" id="item-title" name="item-title" required>
+
+      <label for="item-description">Description:</label>
+      <textarea id="item-description" name="item-description" required></textarea>
+
+      <label for="item-image-1">Upload Picture 1:</label>
+      <input type="file" id="item-image-1" name="item-image-1" accept="image/*" required>
+
+      <label for="item-image-2">Upload Picture 2:</label>
+      <input type="file" id="item-image-2" name="item-image-2" accept="image/*" required>
+
+      <label for="item-image-3">Upload Picture 3:</label>
+      <input type="file" id="item-image-3" name="item-image-3" accept="image/*" required>
+
+      <label for="item-price">Price per Day:</label>
+      <input type="number" id="item-price" name="item-price" required>
+
+      <button type="submit" class="submit-button">Submit</button>
+    </form>
   </div>
 </div>

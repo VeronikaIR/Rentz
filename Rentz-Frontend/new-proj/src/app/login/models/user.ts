@@ -1,3 +1,5 @@
+import {Item} from "../../overview/models/item"
+
 export interface User {
   id: number;
   name: string;
@@ -5,6 +7,7 @@ export interface User {
   phoneNumber: string;
   town?: string;
   photoURL: string;
+  itemsForRent: Item[];
 
   //photo url ??????????
 }

@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../service/auth.service";
 import {UserService} from "../service/user.service";
+import {ItemService} from "../../overview/service/item.service";
 
 @Component({
   selector: 'app-login',
@@ -17,11 +18,14 @@ export class LoginComponent implements OnInit {
 
   signupForm!: FormGroup;
 
+  addItemForRentOpened: boolean = false;
+
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private userService: UserService
+    public userService: UserService,
+    public itemService: ItemService
   ) {
   }
 
@@ -52,7 +56,6 @@ export class LoginComponent implements OnInit {
     this.authService.login(email, password);
 
 
-
     // .then((user) => {
     //   if (user) {
     //     debugger;
@@ -67,13 +70,24 @@ export class LoginComponent implements OnInit {
 
 
   loginWithGoogle() {
-    // Implement Google login logic here
-    this.authService.googleAuth().then((x) => {
-      console.log('Logging in with Google');
-      console.log(x);
-    });
+    this.authService.googleAuth();
+  }
 
-    // You may want to use a service for Google authentication or an external library.
+
+  addItemForRent(): void {
+    this.addItemForRentOpened = !this.addItemForRentOpened;
+  }
+
+  closePopup(): void {
+    this.addItemForRentOpened = false;
+  }
+
+
+  showUsersItemsForRent(): void {
+    this.userService.user$.subscribe((user) => {
+      this.itemService.filteredItems = user.itemsForRent;
+    })
+
   }
 
   signup() {
