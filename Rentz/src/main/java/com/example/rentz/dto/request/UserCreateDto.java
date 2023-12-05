@@ -23,12 +23,14 @@ public class UserCreateDto {
     @NotEmpty(message = "Email cannot be empty")
     private String email;
 
-    @NotBlank
+    //@NotBlank
     private String personalInformation;
    // private Long profilePictureId;
 
-    @NotBlank
+    //@NotBlank
     private String phoneNumber;
 
     private String town;
+
+    private String fireBaseId;
 }

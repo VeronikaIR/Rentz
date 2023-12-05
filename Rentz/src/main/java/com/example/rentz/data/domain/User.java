@@ -25,6 +25,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String fireBaseId;
+
     @NotBlank
     @Column(nullable = false)
     private String name;
@@ -33,13 +35,13 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @NotBlank
+   // @NotBlank
     private String personalInformation;
 
-    @NotBlank
+   // @NotBlank
     private String phoneNumber;
 
-    @NotBlank
+   // @NotBlank
     private String town;
 
 

@@ -24,6 +24,10 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    public Optional<User> getFireBaseId(String id) {
+        return userRepository.findByFireBaseId(id);
+    }
+
     public User createUser(User user) {
         return userRepository.save(user);
     }

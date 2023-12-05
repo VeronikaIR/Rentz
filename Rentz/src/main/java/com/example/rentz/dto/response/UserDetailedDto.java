@@ -14,4 +14,6 @@ public class UserDetailedDto {
     private String phoneNumber;
     private String town;
     private String personalInformation;
+
+    private String fireBaseId;
 }
