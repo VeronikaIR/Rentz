@@ -1,7 +1,6 @@
 package com.example.rentz.data.domain;
 
 import com.example.rentz.data.ItemType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -29,17 +28,25 @@ public class Item {
     @NotBlank
     private String description;
 
+    //TODO remove
     @NotBlank
     private boolean availableNow;
 
     @NotBlank
-    private Double priceForDay;
+    private Double pricePerDay;
 
     @NotBlank
     private ItemType itemType;
 
-//    @NotBlank
-//    private List<String> pictures;
+    @NotBlank
+    private byte[] picture1Base64;
+
+    @NotBlank
+    private byte[] picture2Base64;
+
+    @NotBlank
+    private byte[] picture3Base64;
+
 
     @NotBlank
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

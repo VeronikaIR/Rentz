@@ -1,6 +1,10 @@
 package com.example.rentz.dto.response;
 
+import com.example.rentz.data.domain.Item;
+import com.example.rentz.data.domain.Reservation;
 import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,6 +18,8 @@ public class UserDetailedDto {
     private String phoneNumber;
     private String town;
     private String personalInformation;
+    private List<Item> itemsForRent;
+    private List<Reservation> reservations;
 
     private String fireBaseId;
 }

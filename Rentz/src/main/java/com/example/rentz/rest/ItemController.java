@@ -2,7 +2,6 @@ package com.example.rentz.rest;
 
 import com.example.rentz.data.ItemType;
 import com.example.rentz.data.domain.Item;
-import com.example.rentz.data.domain.User;
 import com.example.rentz.dto.request.ItemCreateDto;
 import com.example.rentz.dto.response.ItemDto;
 import com.example.rentz.exception.ResourceNotFoundException;
@@ -10,9 +9,11 @@ import com.example.rentz.mapper.ItemMapper;
 import com.example.rentz.service.ItemService;
 import com.example.rentz.service.UserService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class ItemController {
     }
 
     @GetMapping("/filter")
-        public ResponseEntity<List<ItemDto>> getItemsByCategory(@RequestParam ItemType type) {
+    public ResponseEntity<List<ItemDto>> getItemsByCategory(@RequestParam ItemType type) {
 
         List<ItemDto> itemDtoList = new ArrayList<>();
         itemService.getItemsByItemType(type).forEach(item -> {
@@ -63,18 +64,23 @@ public class ItemController {
         return ResponseEntity.ok(itemDtoList);
     }
 
-    @PostMapping
-    public ResponseEntity<ItemDto> createItem(@RequestBody ItemCreateDto itemCreateDto) {
+    @PostMapping(path = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Item> createItem(@RequestBody ItemCreateDto itemCreateDto) throws IOException {
 
-        User user = userService.getUserById(itemCreateDto.getOwnerId())
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-        itemCreateDto.setAvailableNow(true);
-        Item item = itemMapper.toItem(itemCreateDto);
-        item.setOwner(user);
-        Item createdItem = itemService.createItem(item);
+        //1.TODO get user from the context
+        //2. Convert pictures to base64 format
 
-        return new ResponseEntity<>(this.itemMapper.toItemDto(createdItem), HttpStatus.CREATED);
+//        User user = userService.getUserById(itemCreateDto.getOwnerId())
+//                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+//
+////        itemCreateDto.setAvailableNow(true);
+//        Item item = itemMapper.toItem(itemCreateDto);
+//        item.setOwner(user);
+//        Item createdItem = itemService.createItem(item);
+
+
+        return new ResponseEntity<>(itemService.createItem(itemCreateDto), HttpStatus.CREATED);
     }
 
 //    @PutMapping("/{id}")

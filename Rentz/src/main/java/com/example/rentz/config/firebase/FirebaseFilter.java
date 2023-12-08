@@ -22,6 +22,11 @@ public class FirebaseFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
+        if (request.getServletPath().equals("/api/items")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String HEADER_NAME = "Authorization";
         String authHeader = request.getHeader(HEADER_NAME);
 

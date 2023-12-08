@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -22,18 +23,22 @@ public class ItemCreateDto {
     private String description;
 
     @NotBlank
-    private boolean availableNow;
-
-    @NotBlank
-    private Double priceForDay;
-
-    //TODO implement logic for storing pictures
-    // private List<String> pictures;
-
-    @NotBlank
-    private Long ownerId;
-
-    @NotBlank
     private ItemType itemType;
+
+    @NotBlank
+    private MultipartFile picture1;
+
+    @NotBlank
+    private MultipartFile picture2;
+
+    @NotBlank
+    private MultipartFile picture3;
+
+    @NotBlank
+    private Double pricePerDay;
+
+//    @NotBlank
+//    private Long ownerId;
+
 
 }

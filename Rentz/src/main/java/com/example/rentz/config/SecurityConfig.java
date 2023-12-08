@@ -1,16 +1,16 @@
 package com.example.rentz.config;
 
 import com.example.rentz.config.firebase.FirebaseFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -24,15 +24,6 @@ import static org.springframework.web.cors.CorsConfiguration.ALL;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-//
-//    @Bean
-//    public FirebaseFilter firebaseFilter() {
-//        return new FirebaseFilter();
-//    }
-//
-//    // Import the FirebaseFilter class here
-//    @Autowired
-//    private FirebaseFilter firebaseFilter;
 
 
     @Bean
@@ -50,17 +41,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .addFilterBefore(new FirebaseFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(new FirebaseFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests((authorize) -> authorize
-                        .requestMatchers("/api/items").permitAll()
+                        // .requestMatchers(new AntPathRequestMatcher("/api/items")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/api/items")).permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                //.cors((cors) -> cors.configurationSource(corsConfigurationSource()))
-                .csrf((csrf) -> csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
-//                .oauth2ResourceServer((resourceServer) -> resourceServer
-//                        .jwt((jwt) -> jwt.jwtAuthenticationConverter(firebaseJwtAuthenticationConverter())))
-                //.cors((cors) -> cors.disable())
                 .build();
     }
 
