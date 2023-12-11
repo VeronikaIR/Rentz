@@ -39,12 +39,15 @@ public class Item {
     private ItemType itemType;
 
     @NotBlank
+    @Lob
     private byte[] picture1Base64;
 
     @NotBlank
+    @Lob
     private byte[] picture2Base64;
 
     @NotBlank
+    @Lob
     private byte[] picture3Base64;
 
 

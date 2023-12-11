@@ -65,7 +65,7 @@ public class ItemController {
     }
 
     @PostMapping(path = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Item> createItem(@RequestBody ItemCreateDto itemCreateDto) throws IOException {
+    public ResponseEntity<Item> createItem(@ModelAttribute ItemCreateDto itemCreateDto) throws IOException {
 
 
         //1.TODO get user from the context
