@@ -28,24 +28,6 @@ export class OverviewPageComponent implements OnInit {
   isFlipped: boolean = false;
 
 
-  // items: Item[] = [
-  //   {id: 1, title: 'Item 1', description: 'RentZ is your go-to platform for renting out unused items and discovering beneficial offerings from others.\n', picture: 'https://picsum.photos/200/300'},
-  //   {id: 2, title: 'Item 2', description: 'RentZ is your go-to platform for renting out unused items and discovering beneficial offerings from others.\n', picture: 'https://picsum.photos/200/300'},
-  //   {id: 3, title: 'Item 3', description: 'RentZ is your go-to platform for renting out unused items and discovering beneficial offerings from others.\n', picture: 'https://picsum.photos/200/300'},
-  //   {id: 1, title: 'Item 1', description: 'This is the first item.', picture: 'https://picsum.photos/200/300'},
-  //   {id: 2, title: 'Item 2', description: 'This is the second item.', picture: 'https://picsum.photos/200/300'},
-  //   {id: 3, title: 'Item 3', description: 'This is the third item.', picture: 'https://picsum.photos/200/300'},
-  //   {id: 1, title: 'Item 1', description: 'This is the first item.', picture: 'https://picsum.photos/200/300'},
-  //   {id: 2, title: 'Item 2', description: 'This is the second item.', picture: 'https://picsum.photos/200/300'},
-  //   {id: 3, title: 'Item 3', description: 'This is the third item.', picture: 'https://picsum.photos/200/300'},
-  //   {id: 1, title: 'Item 1', description: 'This is the first item.', picture: 'https://picsum.photos/200/300'},
-  //   {id: 2, title: 'Item 2', description: 'This is the second item.', picture: 'https://picsum.photos/200/300'},
-  //   {id: 3, title: 'Item 3', description: 'This is the third item.', picture: 'https://picsum.photos/200/300'},
-  //   {id: 1, title: 'Item 1', description: 'This is the first item.', picture: 'https://picsum.photos/200/300'},
-  //   {id: 2, title: 'Item 2', description: 'This is the second item.', picture: 'https://picsum.photos/200/300'},
-  //   {id: 3, title: 'Item 3', description: 'This is the third item.', picture: 'https://picsum.photos/200/300'},
-  // ];
- // items: any;
   public selectedItem?: Item;
   public selectedUser!: User;
 
@@ -68,6 +50,7 @@ export class OverviewPageComponent implements OnInit {
       (data) => {
         this.itemService.items = data;
         this.itemService.filteredItems = data;
+        this.isPageLoaded = true;
       },
       (error) => {
         console.error('Error fetching items:', error);
@@ -87,6 +70,7 @@ export class OverviewPageComponent implements OnInit {
 
   public showItemInfo(item: Item): void {
     this.selectedItem = item;
+    this.showItemInformation = !this.showItemInformation;
     // this.authService.getUserById(item.ownerId).subscribe((user) => {
     //   if (user) {
     //

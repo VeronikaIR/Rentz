@@ -5,7 +5,7 @@ export interface Item {
   picture1Base64: string;
   picture2Base64: string;
   picture3Base64: string;
-  priceForDay: string;
+  pricePerDay: string;
   ownerId: string;
   itemType: string;
 }

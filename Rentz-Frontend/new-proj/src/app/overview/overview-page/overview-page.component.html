@@ -18,15 +18,15 @@
 
         <!-- Three pictures in one line -->
         <div class="picture-container">
-          <img src='https://picsum.photos/200/300' alt="Picture 1">
-          <img src='https://picsum.photos/200/300' alt="Picture 2">
-          <img src='https://picsum.photos/200/300' alt="Picture 3">
+          <img src="{{'data:image/jpg;base64,' + selectedItem?.picture1Base64}}"/>
+          <img src="{{'data:image/jpg;base64,' + selectedItem?.picture2Base64}}"/>
+          <img src="{{'data:image/jpg;base64,' + selectedItem?.picture3Base64}}"/>
         </div>
         <div class="description-container">
           <p>{{this.selectedItem?.description}}</p>
         </div>
         <div class="price-info">
-          <p>Price per day: ${{this.selectedItem?.priceForDay}}</p>
+          <p>Price per day: ${{this.selectedItem?.pricePerDay}}</p>
         </div>
 
         <!--        <div class="owner-info">-->
