@@ -9,7 +9,7 @@ import {OverviewPageComponent} from './overview/overview-page/overview-page.comp
 import {LoginComponent} from "./login/login/login.component";
 import {SidebarComponent} from './shared/sidebar/sidebar.component';
 import {NgOptimizedImage} from "@angular/common";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatDatepickerModule} from "@angular/material/datepicker";
@@ -25,18 +25,19 @@ import {AuthInterceptor} from "./login/interceptors/auth.interceptor";
     LoginComponent,
     SidebarComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    NgOptimizedImage,
-    ReactiveFormsModule,
-    NgbModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        NgOptimizedImage,
+        ReactiveFormsModule,
+        NgbModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireAuthModule,
+        FormsModule
 
-  ],
+    ],
   providers: [MatDatepickerModule, AuthService, {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,

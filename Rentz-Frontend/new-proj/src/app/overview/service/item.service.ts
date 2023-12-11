@@ -29,9 +29,6 @@ export class ItemService {
     this.filteredItems = [];
     debugger;
     if (itemType) {
-      debugger;
-      //this.filteredItems = this.items.filter(x => x.type == itemType);
-      //this.filteredItems
       this.items.forEach(x => {
         if (x.itemType === itemType) {
           this.filteredItems.push(x);
@@ -51,8 +48,9 @@ export class ItemService {
   //   })
   // }
 
-  addItem(item: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, item);
+  createItem(formData: FormData): Observable<Item> {
+    debugger;
+    return this.http.post<Item>(this.apiUrl + '/create', formData);
   }
 
   updateItem(id: number, item: any): Observable<any> {

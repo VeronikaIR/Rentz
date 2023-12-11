@@ -120,7 +120,6 @@ export class AuthService {
 
   private saveUserToLocalStorage(user: firebase.default.User | null): void {
     if (user) {
-      debugger;
       user.getIdToken().then((token) => {
         this.tokenAccess = token;
       });

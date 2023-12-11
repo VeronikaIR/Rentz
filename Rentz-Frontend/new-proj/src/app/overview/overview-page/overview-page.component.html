@@ -1,6 +1,6 @@
 <div class="overview-page">
   <div class="item" *ngFor="let item of this.itemService.filteredItems ">
-    <img src='https://picsum.photos/200/300' alt="{{ item.title }}">
+    <img src="{{'data:image/jpg;base64,' + item.picture1Base64}}"/>
     <h2>{{ item.title }}</h2>
     <p>{{ item.description }}</p>
     <!--    <button (click)="showItemInfo()">View Item</button>-->
@@ -29,12 +29,12 @@
           <p>Price per day: ${{this.selectedItem?.priceForDay}}</p>
         </div>
 
-<!--        <div class="owner-info">-->
-<!--          <h2>Owner Information</h2>-->
-<!--          <p>Name: {{this.selectedUser.name}}</p>-->
-<!--          <p>Phone Number: {{this.selectedUser.phoneNumber}}</p>-->
-<!--          <p>Town: {{this.selectedUser.town}}</p>-->
-<!--        </div>-->
+        <!--        <div class="owner-info">-->
+        <!--          <h2>Owner Information</h2>-->
+        <!--          <p>Name: {{this.selectedUser.name}}</p>-->
+        <!--          <p>Phone Number: {{this.selectedUser.phoneNumber}}</p>-->
+        <!--          <p>Town: {{this.selectedUser.town}}</p>-->
+        <!--        </div>-->
 
         <!-- Button to show the reservation calendar -->
         <button id="reserveButton1" (click)="flip()">Reserve</button>

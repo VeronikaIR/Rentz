@@ -11,9 +11,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     let accessToken: string | undefined = this.authService.tokenAccess;
-    debugger;
 
-    if (accessToken && !request.url.includes('items')) {
+    if (accessToken && request.url !==('/api/items')) {
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${accessToken}`
