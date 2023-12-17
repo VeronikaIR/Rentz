@@ -86,6 +86,7 @@ export class OverviewPageComponent implements OnInit {
 
   public closeItemInfo(): void {
     this.showItemInformation = false;
+    this.dateFormControl.reset();
 
   }
 
@@ -115,6 +116,7 @@ export class OverviewPageComponent implements OnInit {
 
 
     this.showItemInformation = false;
+    this.dateFormControl.reset();
 
   }
 

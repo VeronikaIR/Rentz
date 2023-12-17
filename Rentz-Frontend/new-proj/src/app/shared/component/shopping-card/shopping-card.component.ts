@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {CardService} from "../../service/card.service";
+import {UserService} from "../../../login/service/user.service";
 
 @Component({
   selector: 'app-shopping-card',
@@ -7,7 +8,7 @@ import {CardService} from "../../service/card.service";
   styleUrls: ['./shopping-card.component.scss']
 })
 export class ShoppingCardComponent {
-  constructor(public cardService: CardService) {
+  constructor(public cardService: CardService, public userService: UserService) {
   }
 
   getTotalPrice() {

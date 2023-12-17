@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Observable, Subject} from "rxjs";
-import {Item} from "../../overview/models/item";
 import {Reservation} from "../interface/reservation";
 import {ReservationService} from "../../overview/service/reservation.service";
 
@@ -13,6 +12,8 @@ export class CardService {
   public cartItems: Reservation[] = [];
   public products = new Subject();
   public checkoutRequested = false;
+
+  public isShoppingCartOpen: boolean = false;
 
   constructor(
     private reservationService: ReservationService
@@ -31,13 +32,13 @@ export class CardService {
 
   // Remove single product from the cart
   removeProductFromCart(productId: string) {
-    this.cartItems.map((item: Reservation, index:number) => {
+    this.cartItems.map((item: Reservation, index: number) => {
       if (item.item.id === productId) {
         this.cartItems.splice(index, 1);
       }
     });
 
-    this.reservationService.reservationsList.map((item: Reservation, index:number) => {
+    this.reservationService.reservationsList.map((item: Reservation, index: number) => {
       if (item.item.id === productId) {
         this.cartItems.splice(index, 1);
       }
@@ -45,6 +46,10 @@ export class CardService {
 
     // Update Observable value
     this.products.next(this.cartItems);
+  }
+
+  openShoppingCart(flag: boolean): void {
+    this.isShoppingCartOpen = !this.isShoppingCartOpen;
   }
 
 

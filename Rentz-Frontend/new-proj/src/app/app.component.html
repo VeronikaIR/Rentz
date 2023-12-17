@@ -17,7 +17,7 @@
           <app-shopping-card></app-shopping-card>
           </div>
           <span class="cart-count">
-             <img src="/assets/images/icons8-shopping-cart-48.png" alt="My Image">
+             <img src="/assets/images/icons8-shopping-cart-48.png" alt="My Image" (click)="cardService.openShoppingCart(true)">
                    <em>{{cartProductCount}}</em></span>
         </ul>
 
