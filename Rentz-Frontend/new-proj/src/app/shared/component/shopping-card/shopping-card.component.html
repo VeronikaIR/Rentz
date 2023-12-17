@@ -1,0 +1,23 @@
+<div class="product-cart" *ngIf="cardService.cartItems && cardService.cartItems.length > 0">
+  <ul>
+    <li *ngFor="let item of cardService.cartItems">
+      <img [width]="32" [height]="32" class="card-img-top" src="{{'data:image/jpg;base64,' + item.item.picture1Base64}}" alt="Card image cap">
+      {{item.item.title}}
+      <span>{{item.totalPrice }} лв.</span>
+      <button type="button" class="close" aria-label="Remove Item" (click)="cardService.removeProductFromCart(item.item.id)">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </li>
+  </ul>
+  <div class="cart-total">
+<!--    <p><button type="button" class="btn btn-outline-primary btn-sm" (click)="emptyCart()">Empty Cart</button></p>-->
+    <p class="text-right">
+      <strong class="d-block">Total:</strong>
+      <span class="d-block">{{getTotalPrice() }} лв.</span>
+      <br/>
+      <button type="button" aria-label="Checkout" (click)="requestCheckout()">
+        <span>Checkout</span>
+      </button>
+    </p>
+  </div>
+</div>

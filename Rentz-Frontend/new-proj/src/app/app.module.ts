@@ -17,13 +17,17 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {environment} from "../environments/environment";
 import {AuthService} from "./login/service/auth.service";
 import {AuthInterceptor} from "./login/interceptors/auth.interceptor";
+import { ShoppingCardComponent } from './shared/component/shopping-card/shopping-card.component';
+import 'bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js';
+import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
 
 @NgModule({
   declarations: [
     AppComponent,
     OverviewPageComponent,
     LoginComponent,
-    SidebarComponent
+    SidebarComponent,
+    ShoppingCardComponent
   ],
     imports: [
         BrowserModule,
@@ -35,8 +39,8 @@ import {AuthInterceptor} from "./login/interceptors/auth.interceptor";
         HttpClientModule,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireAuthModule,
-        FormsModule
-
+        FormsModule,
+        BsDatepickerModule.forRoot()
     ],
   providers: [MatDatepickerModule, AuthService, {
     provide: HTTP_INTERCEPTORS,

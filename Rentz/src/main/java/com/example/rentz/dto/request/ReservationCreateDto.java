@@ -27,8 +27,8 @@ public class ReservationCreateDto {
     @NotBlank
     private LocalDate bookedOn;
 
-    @NotBlank
-    private Double priceForDay;
+//    @NotBlank
+//    private Double priceForDay;
 
     @NotBlank
     private LocalDate bookedUntil;

@@ -1,6 +1,7 @@
 package com.example.rentz.data.domain;
 
 import com.example.rentz.data.ItemType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -52,15 +53,15 @@ public class Item {
 
 
     @NotBlank
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     //@MapsId("owner_id")
     private User owner;
 
-//    @JsonIgnore
-//    @OneToOne(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Reservation reservation;
+    @JsonIgnore
+    @OneToMany(mappedBy = "item",cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Reservation> reservations;
 
     @ElementCollection
-    private List<LocalDate> totalDates = new ArrayList<>();
+    private List<LocalDate> reservationDates = new ArrayList<>();
 }

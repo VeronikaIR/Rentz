@@ -1,7 +1,7 @@
 import {Item} from "../../overview/models/item"
 
 export interface User {
-  id: number;
+  id: string;
   name: string;
   email: string;
   phoneNumber: string;

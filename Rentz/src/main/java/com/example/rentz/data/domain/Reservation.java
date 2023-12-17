@@ -26,7 +26,7 @@ public class Reservation {
     private User owner;
 
     @NotBlank
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "booked_item_id", referencedColumnName = "id")
     private Item item;
 

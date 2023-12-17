@@ -120,10 +120,6 @@ export class LoginComponent implements OnInit {
   }
 
   createItem(): void {
-    debugger;
-    // this.createItemFromGroup.markAsTouched();
-    // if (!this.createItemFromGroup.valid) return;
-
     let formData: FormData = new FormData();
 
     if (this.createItemFromGroup.value.title) formData.set('title', this.createItemFromGroup.value.title.toString());
@@ -135,20 +131,11 @@ export class LoginComponent implements OnInit {
     if (this.createItemFromGroup.value.pricePerDay) formData.set('pricePerDay', this.createItemFromGroup.value.pricePerDay.toString());
 
     this.itemService.createItem(formData).pipe(take(1)).subscribe(() => {
-      //TODO refresh overview page;
+        //TODO behaviour subject
     })
 
 
   }
-
-  // setPicture1ToFormGroup(files: any) {
-  //   console.log(files);
-  //   debugger;
-  //   let file: File | null = files.
-  //
-  //   this.createItemFromGroup.controls.picture1.setValue(file);
-  //
-  // }
 
 
   onFileChange1(event: any) {

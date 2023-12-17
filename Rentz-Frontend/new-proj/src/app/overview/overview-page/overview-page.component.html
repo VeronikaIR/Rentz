@@ -7,13 +7,13 @@
     <button class="submit-btn" (click)="showItemInfo(item)">View Item</button>
   </div>
 </div>
-<div class="popup" [ngClass]="{'show': isPageLoaded && showItemInformation}">
+<div class="popup" [ngClass]="{'show': isPageLoaded && (showItemInformation || cardService.getCheckoutStatus())}">
 
   <div class="center">
     <button id="close" (click)="closeItemInfo()">X</button>
     <div *ngIf="isPageLoaded" class="item-page" [class.flipped]="isFlipped">
 
-      <div class="item-front">
+      <div class="item-front" *ngIf="showItemInformation">
         <h1>{{this.selectedItem?.title}}</h1>
 
         <!-- Three pictures in one line -->
@@ -26,21 +26,35 @@
           <p>{{this.selectedItem?.description}}</p>
         </div>
         <div class="price-info">
-          <p>Price per day: ${{this.selectedItem?.pricePerDay}}</p>
+          <p>Price per day: {{this.selectedItem?.pricePerDay}} лв.</p>
+
+          <p *ngIf="dateFormControl.value && selectedItem">Total
+            price: {{this.calculateDaysInRange(dateFormControl.value[0], dateFormControl.value[1]) * selectedItem.pricePerDay}}
+            лв.</p>
         </div>
 
-        <!--        <div class="owner-info">-->
-        <!--          <h2>Owner Information</h2>-->
-        <!--          <p>Name: {{this.selectedUser.name}}</p>-->
-        <!--          <p>Phone Number: {{this.selectedUser.phoneNumber}}</p>-->
-        <!--          <p>Town: {{this.selectedUser.town}}</p>-->
-        <!--        </div>-->
-
         <!-- Button to show the reservation calendar -->
-        <button id="reserveButton1" (click)="flip()">Reserve</button>
+
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12 col-12 col-md-4 form-group">
+              <input
+                [formControl]="dateFormControl"
+                type="text"
+                placeholder="Datepicker"
+                class="form-control"
+                bsDaterangepicker
+                [bsConfig]="{ isAnimated: true , datesDisabled: disableDates(selectedItem)}">
+            </div>
+          </div>
+        </div>
+
+        <!--        TODO fix disabled button-->
+        <button id="reserveButton1" [disabled]="(userService.user$ | async) === undefined" (click)="reserve()">Reserve
+        </button>
       </div>
 
-      <div class="item-back" *ngIf="showItemInformation">
+      <div class="item-front" *ngIf="cardService.getCheckoutStatus()">
         <div id="booking" class="section">
           <div class="section-center">
             <div class="container">
@@ -50,7 +64,7 @@
                 </div>
                 <div>
                   <div class="booking-form">
-                    <form [formGroup]="reservationForm">
+                    <form>
                       <div class="form-group">
                         <span class="form-label">Your Names</span>
                         <input class="form-control" type="text" placeholder="Enter a destination or hotel name">
@@ -71,17 +85,17 @@
                       </div>
                       <div class="row">
                         <div class="col-sm-8">
-                          <div class="form-group">
-                            <span class="form-label">Dates</span>
-                            <!--                            <input class="form-control" type="date" required>-->
-                            <div class="form-group">
-                            </div>
+<!--                          <div class="form-group">-->
+<!--                            <span class="form-label">Dates</span>-->
+<!--                            &lt;!&ndash;                            <input class="form-control" type="date" required>&ndash;&gt;-->
+<!--                            <div class="form-group">-->
+<!--                            </div>-->
 
-                          </div>
+<!--                          </div>-->
                           <div class="col-sm-4">
                             <div class="form-group">
                               <span class="form-label">Price</span>
-                              <input class="form-control" required>
+                              <input class="form-control" required disabled [value]="cardService.getTotalPrice()">
                             </div>
                           </div>
                         </div>
@@ -112,7 +126,7 @@
                         </div>
                       </div>
                       <div class="form-btn">
-                        <button class="submit-btn">Check availability</button>
+                        <button class="submit-btn" (click)="checkout()">Checkout</button>
                       </div>
                     </form>
                   </div>

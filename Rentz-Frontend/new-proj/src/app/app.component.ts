@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {SidebarService} from "./shared/service/sidebar.service";
 import {ItemService} from "./overview/service/item.service";
+import {CardService} from "./shared/service/card.service";
 
 
 @Component({
@@ -9,19 +10,12 @@ import {ItemService} from "./overview/service/item.service";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'angular-pro-sidebar';
-  constructor(public sidebarservice: SidebarService, public itemService: ItemService) { }
-  toggleSidebar() {
-    this.sidebarservice.setSidebarState(!this.sidebarservice.getSidebarState());
-  }
-  toggleBackgroundImage() {
-    this.sidebarservice.hasBackgroundImage = !this.sidebarservice.hasBackgroundImage;
-  }
-  getSideBarState() {
-    return this.sidebarservice.getSidebarState();
-  }
 
-  hideSidebar() {
-    this.sidebarservice.setSidebarState(true);
+   cartProductCount: number = 0
+
+  constructor(public sidebarservice: SidebarService, public itemService: ItemService, public cardService: CardService) {
+    this.cardService.getProducts().subscribe(data => {
+      this.cartProductCount = data.length;
+    })
   }
 }

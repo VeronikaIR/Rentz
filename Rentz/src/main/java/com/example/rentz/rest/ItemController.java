@@ -14,8 +14,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/items")
@@ -38,6 +41,18 @@ public class ItemController {
 
         List<ItemDto> itemDtoList = new ArrayList<>();
         itemService.getAllItems().forEach(item -> {
+            List<LocalDate> reservationDates = new ArrayList<>();
+            item.getReservations().forEach(reservation -> {
+                LocalDate startDate = reservation.getBookedOn();
+                LocalDate endDate = reservation.getBookedUntil();
+                List<LocalDate> dates = startDate.datesUntil(endDate)
+                        .collect(Collectors.toList());
+                reservationDates.addAll(dates);
+                reservationDates.add(endDate);
+                Collections.sort(reservationDates);
+            });
+            item.setReservationDates(reservationDates);
+
             itemDtoList.add(itemMapper.toItemDto(item));
         });
 
