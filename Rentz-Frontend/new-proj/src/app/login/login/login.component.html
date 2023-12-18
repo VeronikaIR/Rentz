@@ -6,40 +6,40 @@
     <ng-container *ngIf="!(userService.user$ | async) as user">
       <p>&nbsp;</p>
       <p>&nbsp;</p>
-      <h1 class="welcome-header">Welcome to RentZ,</h1>
+      <h1 class="welcome-header">Welcome to RentZ</h1>
       <p>&nbsp;</p>
-      <p class="subtext">Create an account to post your ads or rent items.</p>
 
       <div id="app">
 
         <!-- login.component.html -->
 
         <div class="login-container">
-          <div class="login-box">
+          <div class="login-box" style="text-align: center">
+            <h4 style="text-align: center">Log into your profile to rent items.</h4>
             <div *ngIf="!showRegisterForm">
               <h2>Login</h2>
-              <!--              <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">-->
+              <!--                            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">-->
 
-              <!--                <div class="input-group">-->
-              <!--                  <label for="email">Email</label>-->
-              <!--                  <input formControlName="email" type="email" id="email" name="newEmail" required>-->
-              <!--                  <div *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched"-->
-              <!--                       class="error-message">Email is required-->
-              <!--                  </div>-->
-              <!--                </div>-->
+              <!--                              <div class="input-group">-->
+              <!--                                <label for="email">Email</label>-->
+              <!--                                <input formControlName="email" type="email" id="email" name="newEmail" required>-->
+              <!--                                <div *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched"-->
+              <!--                                     class="error-message">Email is required-->
+              <!--                                </div>-->
+              <!--                              </div>-->
 
 
-              <!--                <div class="input-group">-->
-              <!--                  <label for="newPassword">Password</label>-->
-              <!--                  <input type="password" id="password" name="newPassword" formControlName="password" required>-->
+              <!--                              <div class="input-group">-->
+              <!--                                <label for="newPassword">Password</label>-->
+              <!--                                <input type="password" id="password" name="newPassword" formControlName="password" required>-->
 
-              <!--                  <div *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched"-->
-              <!--                       class="error-message">Password is required-->
-              <!--                  </div>-->
-              <!--                </div>-->
+              <!--                                <div *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched"-->
+              <!--                                     class="error-message">Password is required-->
+              <!--                                </div>-->
+              <!--                              </div>-->
 
-              <!--                <button type="submit">Login</button>-->
-              <!--              </form>-->
+              <!--                              <button type="submit">Login</button>-->
+              <!--                            </form>-->
 
               <div class="separator">or</div>
 
@@ -53,19 +53,7 @@
               </div>
             </div>
             <div *ngIf="showRegisterForm" class="register-form">
-              <h2>Register</h2>
-              <form>
-                <div class="input-group">
-                  <label for="newUsername">New Username</label>
-                  <input type="text" id="newUsername" name="newUsername" required>
-                </div>
-                <div class="input-group">
-                  <label for="newPassword">New Password</label>
-                  <input type="password" id="newPassword" name="newPassword" required>
-                </div>
-
-                <button type="submit">Register</button>
-              </form>
+              <app-register-user></app-register-user>
             </div>
 
           </div>
@@ -82,14 +70,18 @@
         <div class="user-info">
           <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
           <ul class="meta list list-unstyled">
-            <li class="name" style="font-size: 20px">{{(userService.user$ | async)?.name}}
-            </li>
+            <li class="name" style="font-size: 20px">{{(userService.user$ | async)?.name}}</li>
+            <li class="name" style="font-size: 15px">{{(userService.user$ | async)?.email}}</li>
+            <li class="name" style="font-size: 20px">{{(userService.user$ | async)?.phoneNumber}}</li>
+            <li class="name" style="font-size: 20px">{{(userService.user$ | async)?.town}}</li>
+
           </ul>
         </div>
         <nav class="side-menu">
           <ul class="nav" style=" text-align: left">
             <!--            <li><a><span class="fa fa-credit-card"></span> 📝 Edit Profile</a></li>-->
-            <li class="active" (click)="addItemForRent()"><a href="#"><span class="fa fa-user"></span> ➕ Add item for
+            <li class="active" (click)="itemService.addItemForRent()"><a href="#"><span class="fa fa-user"></span> ➕ Add
+              item for
               rent
             </a>
 
@@ -106,44 +98,8 @@
   </div>
 </div>
 
+<app-create-item></app-create-item>
 
-<div *ngIf="addItemForRentOpened" class="popup-container">
-  <form [formGroup]="createItemFromGroup" class="item-form" (ngSubmit)="createItem()" enctype="multipart/form-data">
-    <div class="popup-content">
-      <div class="popup-header">
-        <h2>Add Item 📎</h2>
-        <button class="close-button" (click)="closePopup()">×</button>
-      </div>
 
-      <label for="item-title">Title:</label>
-      <input type="text" id="item-title" name="item-title" formControlName="title" required>
 
-      <label for="item-description">Description:</label>
-      <input id="item-description" name="item-description" formControlName="description" required>
-
-      <label for="item-description">Type:</label>
-      <input id="item-type" name="item-type" formControlName="itemType" required>
-
-      <label>Upload Picture 1:</label>
-      <input type="file"
-             accept="image/jpeg, image/png" (change)=onFileChange1($event)
-             required/>
-
-      <label>Upload Picture 2:</label>
-      <input type="file"
-             accept="image/jpeg, image/png" (change)="onFileChange2($event)" required/>
-
-      <label>Upload Picture 3:</label>
-      <input type="file" accept="image/jpeg, image/png"
-             (change)="onFileChange3($event)"
-             required/>
-
-      <label for="item-price">Price per Day:</label>
-      <input id="item-price" name="item-price" formControlName="pricePerDay" required/>
-
-      <button type="submit" class="submit-button">Submit</button>
-
-    </div>
-  </form>
-</div>
 

@@ -1,0 +1,29 @@
+<h2>Register</h2>
+<form [formGroup]="registerForm" (ngSubmit)="createUser()">
+  <div class="input-group">
+    <label for="newUsername">Names:</label>
+    <input formControlName="names" type="text" id="names" name="name" required>
+  </div>
+  <div class="input-group">
+    <label for="newUsername">Email:</label>
+    <input formControlName="email" type="text" id="newUsername" name="email" required>
+  </div>
+  <div class="input-group">
+    <label for="password">Password:</label>
+    <input formControlName="password" type="password" id="password" name="newPassword" required>
+  </div>
+  <div class="input-group">
+    <label for="password">Confirm password:</label>
+    <input formControlName="confirmPassword" type="password" id="password2" name="newPassword" required>
+  </div>
+  <div class="input-group">
+    <label for="phoneNumber">Phone number:</label>
+    <input formControlName="phoneNumber" type="text" id="phoneNumber" name="phoneNumber" required>
+  </div>
+  <div class="input-group">
+    <label for="town">Town:</label>
+    <input formControlName="town" type="text" id="town" name="town" required>
+  </div>
+  <p *ngIf="hasError" style="color:red">{{errorMsg}}</p>
+  <button type="submit">Register</button>
+</form>

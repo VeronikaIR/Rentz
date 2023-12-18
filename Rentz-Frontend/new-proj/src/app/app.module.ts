@@ -20,6 +20,8 @@ import {AuthInterceptor} from "./login/interceptors/auth.interceptor";
 import { ShoppingCardComponent } from './shared/component/shopping-card/shopping-card.component';
 import 'bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js';
 import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
+import { CreateItemComponent } from './login/create-item/create-item.component';
+import {RegisterUserComponent} from "./login/register-user/register-user.component";
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
     OverviewPageComponent,
     LoginComponent,
     SidebarComponent,
-    ShoppingCardComponent
+    ShoppingCardComponent,
+    CreateItemComponent,
+    RegisterUserComponent
   ],
     imports: [
         BrowserModule,

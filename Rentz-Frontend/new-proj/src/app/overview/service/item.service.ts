@@ -14,6 +14,8 @@ export class ItemService {
   private itemsSubject: ReplaySubject<Item[]> = new ReplaySubject<Item[]>();
   itemsSubject$: Observable<Item[]> = this.itemsSubject.asObservable();
 
+  addItemForRentOpened: boolean = false;
+
   constructor(private http: HttpClient) {
   }
 
@@ -66,4 +68,10 @@ export class ItemService {
     debugger;
     this.itemsSubject.next(items);
   }
+
+
+  addItemForRent(): void {
+    this.addItemForRentOpened = true;
+  }
+
 }

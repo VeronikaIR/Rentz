@@ -1,3 +1,81 @@
+.popup-container {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.popup-content {
+  padding: 20px;
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.popup-header h2 {
+  margin: 0;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #999;
+}
+
+.item-form {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    margin-bottom: 5px;
+  }
+
+  input,
+  textarea,
+  select {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .submit-button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #2980b9;
+    }
+  }
+}
+
+
+
+
+
+
+
+
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap");
 
 /* Add this to your CSS file */
@@ -8,7 +86,6 @@
   font-weight: bold;
   color: #3a1c71; /* Dark purple color */
   margin-bottom: 10px;
-  background: white;
 }
 
 .subtext {
@@ -231,6 +308,50 @@ button:hover {
   text-decoration: none;
 }
 
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+.register-form {
+  margin-top: 20px;
+}
+
+.register-form h2 {
+  text-align: center;
+  color: #3a1c71;
+}
+
+.register-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.register-form .input-group label {
+  color: #3a1c71;
+}
+
+.register-form input {
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #3a1c71;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.register-form button {
+  background: linear-gradient(to right, #3a1c71, #ff6b6b);
+  color: #ffffff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.register-form button:hover {
+  background: linear-gradient(to right, #ff6b6b, #3a1c71);
+}
 
 .google-login {
   text-align: center;
@@ -334,8 +455,6 @@ button:hover {
   }
 }
 
-
-// >>>>>>>>>>>>>>>> add item popup >>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
 

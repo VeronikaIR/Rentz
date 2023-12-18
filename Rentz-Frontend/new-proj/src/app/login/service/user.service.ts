@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {catchError, Observable, of, ReplaySubject} from "rxjs";
 import {User} from "../models/user";
+import {CreateUser} from "../models/create-user";
 
 @Injectable({
   providedIn: 'root'
@@ -48,5 +49,14 @@ export class UserService {
 
   setUser(user: User): void {
     this.userSubject.next(user);
+  }
+
+  createUser(user: CreateUser): Observable<User | null> {
+    return this.http.post<User>(this.apiUrlUsers, user).pipe(
+      catchError((error) => {
+        console.error(`Failed to fetch user}:`, error);
+        return of(null);
+      })
+    );
   }
 }

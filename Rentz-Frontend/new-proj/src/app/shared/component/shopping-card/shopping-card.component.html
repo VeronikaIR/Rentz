@@ -24,11 +24,25 @@
       </p>
     </div>
   </div>
-  <div *ngIf="cardService.cartItems === []  && cardService.cartItems.length === 0">
-    <div style="width: 100px">
-      <img src="../src/assets/images/icons8-shopping-cart-48.png" alt="My Image">
-      <h3><strong>Your Cart is Empty</strong></h3>
-    </div>
+  <div *ngIf="cardService.cartItems === []  && cardService.cartItems.length === 0" >
+
+<!--    <ul>-->
+<!--          <div style="width: 100px">-->
+<!--            <img src="../src/assets/images/icons8-shopping-cart-48.png" alt="My Image">-->
+<!--            <h3><strong>Your Cart is Empty</strong></h3>-->
+<!--          </div>-->
+<!--    </ul>-->
+<!--    <div class="cart-total">-->
+<!--      &lt;!&ndash;    <p><button type="button" class="btn btn-outline-primary btn-sm" (click)="emptyCart()">Empty Cart</button></p>&ndash;&gt;-->
+<!--      <p class="text-right">-->
+<!--        <strong class="d-block">Total:</strong>-->
+<!--        <span class="d-block">{{getTotalPrice() }} лв.</span>-->
+<!--        <br/>-->
+<!--        <button type="button" aria-label="Checkout" (click)="requestCheckout()">-->
+<!--          <span>Checkout</span>-->
+<!--        </button>-->
+<!--      </p>-->
+<!--    </div>-->
   </div>
 
 </div>
