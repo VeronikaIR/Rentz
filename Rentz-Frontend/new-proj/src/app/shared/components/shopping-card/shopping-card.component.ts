@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {CardService} from "../../service/card.service";
-import {UserService} from "../../../login/service/user.service";
+import {UserService} from "../../../side-bar/service/user.service";
 
 @Component({
   selector: 'app-shopping-card',

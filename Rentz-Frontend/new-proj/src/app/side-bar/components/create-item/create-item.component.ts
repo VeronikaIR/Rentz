@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {CreateItemFormGroup} from "../../overview/models/create-item-form-group";
+import {CreateItemFormGroup} from "../../../overview/models/create-item-form-group";
 import {take} from "rxjs";
-import {ItemService} from "../../overview/service/item.service";
+import {ItemService} from "../../../overview/service/item.service";
 
 @Component({
   selector: 'app-create-item',

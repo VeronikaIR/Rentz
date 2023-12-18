@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {Item} from "../models/item";
-import {ReservationCreateDTO} from "../models/reservation";
+import {Item} from "../../models/item";
+import {ReservationCreateDTO} from "../../models/reservation";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {ItemService} from "../service/item.service";
-import {User} from "../../login/models/user";
-import {AuthService} from "../../login/service/auth.service";
-import {UserService} from "../../login/service/user.service";
-import {ReservationService} from "../service/reservation.service";
-import {Reservation} from "../../shared/interface/reservation";
-import {CardService} from "../../shared/service/card.service";
+import {ItemService} from "../../service/item.service";
+import {User} from "../../../side-bar/models/user";
+import {AuthService} from "../../../side-bar/service/auth.service";
+import {UserService} from "../../../side-bar/service/user.service";
+import {ReservationService} from "../../service/reservation.service";
+import {Reservation} from "../../../shared/interface/reservation";
+import {CardService} from "../../../shared/service/card.service";
 
 @Component({
   selector: 'app-overview-page',

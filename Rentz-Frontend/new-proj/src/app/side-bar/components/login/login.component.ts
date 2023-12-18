@@ -1,11 +1,11 @@
 import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../service/auth.service";
-import {UserService} from "../service/user.service";
-import {ItemService} from "../../overview/service/item.service";
+import {AuthService} from "../../service/auth.service";
+import {UserService} from "../../service/user.service";
+import {ItemService} from "../../../overview/service/item.service";
 import {take} from "rxjs";
-import {CreateItemFormGroup} from "../../overview/models/create-item-form-group";
-import {User} from "../models/user";
+import {CreateItemFormGroup} from "../../../overview/models/create-item-form-group";
+import {User} from "../../models/user";
 
 @Component({
   selector: 'app-login',
