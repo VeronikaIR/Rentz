@@ -6,6 +6,7 @@ import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {Router} from "@angular/router";
 import {GoogleAuthProvider} from 'firebase/auth';
 import {UserService} from "./user.service";
+import {FormGroup} from "@angular/forms";
 
 
 @Injectable({
@@ -55,25 +56,35 @@ export class AuthService {
   }
 
 
-  // setUserData(user: any) {
-  //
-  //   const userRef: AngularFirestoreDocument<any> = this.afs.doc(
-  //     `users/${user.uid}`
-  //   );
-  //
-  //   const userData: User = {
-  //     id: user.uid,
-  //     email: user.email,
-  //     name: user.displayName,
-  //     photoURL: user.photoURL,
-  //     phoneNumber: user.phoneNumber
-  //   };
-  //
-  //   return userRef.set(userData, {
-  //     merge: true,
-  //   });
-  // }
+  registerUser(formGroup: FormGroup) {
+    this.afAuth.createUserWithEmailAndPassword(formGroup.value.email, formGroup.value.password)
+      .then((user) => {
+        if (user) {
+          this.afAuth.authState.pipe(
+            take(1),
+            switchMap((user) => {
+              this.currentUser = user;
+              this.saveUserToLocalStorage(user);
 
+              let userToCreate = {
+                name: formGroup.value.names,
+                email: formGroup.value.email,
+                phoneNumber: formGroup.value.phoneNumber,
+                town: formGroup.value.town
+              }
+
+              return this.userService.createUser(userToCreate);
+            })
+          ).subscribe((user) => {
+            if (user) {
+              this.userService.setUser(user);
+            }
+          });
+        }
+
+      })
+
+  }
 
   /** login with Google */
   googleAuth() {
@@ -118,7 +129,7 @@ export class AuthService {
   // }
 
 
-  private saveUserToLocalStorage(user: firebase.default.User | null): void {
+  public saveUserToLocalStorage(user: firebase.default.User | null): void {
     if (user) {
       user.getIdToken().then((token) => {
         this.tokenAccess = token;

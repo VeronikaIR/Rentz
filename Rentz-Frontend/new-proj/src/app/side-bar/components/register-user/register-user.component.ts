@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import {UserService} from "../../service/user.service";
+import {AuthService} from "../../service/auth.service";
 
 @Component({
   selector: 'app-register-user',
@@ -15,7 +16,7 @@ export class RegisterUserComponent implements OnInit {
   errorMsg: string = '';
 
   constructor(public afAuth: AngularFireAuth,
-              public userService: UserService) {
+              public userService: UserService, private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -43,22 +44,9 @@ export class RegisterUserComponent implements OnInit {
       this.hasError = true;
       this.errorMsg = 'Passwords do not match.'
     } else {
-      this.afAuth.createUserWithEmailAndPassword(this.registerForm.value.email, this.registerForm.value.password)
-        .then((fireBaseUser) => {
-          let userToCreate = {
-            name: this.registerForm.value.names,
-            email: this.registerForm.value.email,
-            phoneNumber: this.registerForm.value.phoneNumber,
-            town: this.registerForm.value.town
-          }
-          this.userService.createUser(userToCreate).subscribe((user) => {
-            if (user) this.userService.setUser(user);
-          })
+      this.authService.registerUser(this.registerForm);
 
-        })
-        .catch(error => {
-          console.error('Registration failed:', error);
-        });
+
     }
     console.log(this.registerForm.value);
   }

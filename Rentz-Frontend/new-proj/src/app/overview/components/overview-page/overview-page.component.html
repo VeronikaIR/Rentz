@@ -22,120 +22,125 @@
           <img src="{{'data:image/jpg;base64,' + selectedItem?.picture2Base64}}"/>
           <img src="{{'data:image/jpg;base64,' + selectedItem?.picture3Base64}}"/>
         </div>
-        <div class="description-container">
+        <div class="description-container mt-3">
           <p>{{this.selectedItem?.description}}</p>
         </div>
-        <div class="price-info">
-          <p>Price per day: {{this.selectedItem?.pricePerDay}} лв.</p>
+        <div class="row justify-content-between">
+          <div class="col-md-4 price-info mt-4">
+            <p>Price per day: {{ this.selectedItem?.pricePerDay }} лв.</p>
 
-          <p *ngIf="dateFormControl.value && selectedItem">Total
-            price: {{this.calculateDaysInRange(dateFormControl.value[0], dateFormControl.value[1]) * selectedItem.pricePerDay}}
-            лв.</p>
-        </div>
+            <p *ngIf="dateFormControl.value && selectedItem">Total
+<!--              price: {{ this.countDaysBetweenDates(dateFormControl.value[0], dateFormControl.value[1], selectedItem.reservationDates) * selectedItem.pricePerDay }}-->
+              lv.</p>
+          </div>
 
-        <!-- Button to show the reservation calendar -->
-
-        <div class="container">
-          <div class="row">
-            <div class="col-xs-12 col-12 col-md-4 form-group">
-              <input
-                [formControl]="dateFormControl"
-                type="text"
-                placeholder="Datepicker"
-                class="form-control"
-                bsDaterangepicker
-                [bsConfig]="{ isAnimated: true , datesDisabled: disableDates(selectedItem)}">
-            </div>
+          <div class="col-md-4 mt-4" *ngIf="(userService.user$ | async)">
+            <input
+              [formControl]="dateFormControl"
+              type="text"
+              placeholder="Select dates"
+              class="form-control"
+              bsDaterangepicker
+              [bsConfig]="{ isAnimated: true, datesDisabled: disableDates(selectedItem), dateInputFormat: 'dd-MM-yyyy' }">
           </div>
         </div>
 
-        <!--        TODO fix disabled button-->
-        <button id="reserveButton1" [disabled]="(userService.user$ | async) === undefined" (click)="reserve()">Reserve
-        </button>
-      </div>
 
-      <div class="item-front" *ngIf="cardService.getCheckoutStatus()">
-        <div id="booking" class="section">
-          <div class="section-center">
-            <div class="container">
-              <div class="row">
-                <div class="booking-cta">
-                  <h1>Make your reservation</h1>
-                </div>
-                <div>
-                  <div class="booking-form">
-                    <form>
-                      <div class="form-group">
-                        <span class="form-label">Your Names</span>
-                        <input class="form-control" type="text" placeholder="Enter a destination or hotel name">
-                      </div>
-                      <div class="row">
-                        <div class="col-sm-6">
-                          <div class="form-group">
-                            <span class="form-label">Town</span>
-                            <input class="form-control" required>
-                          </div>
-                        </div>
-                        <div class="col-sm-6">
-                          <div class="form-group">
-                            <span class="form-label">Phone</span>
-                            <input class="form-control" required/>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-sm-8">
-<!--                          <div class="form-group">-->
-<!--                            <span class="form-label">Dates</span>-->
-<!--                            &lt;!&ndash;                            <input class="form-control" type="date" required>&ndash;&gt;-->
-<!--                            <div class="form-group">-->
-<!--                            </div>-->
+        <!-- Button to show the reservation calendar -->
 
-<!--                          </div>-->
-                          <div class="col-sm-4">
+        <div class="mt-5" *ngIf="(userService.user$ | async)">
+          <button id="reserveButton1" (click)="reserve()">Reserve
+          </button>
+          <div *ngIf="!dateFormControl.value && isClickedReserve" style="color: red; text-align: center" class="mt-1">
+            To make a reservation, please begin by selecting the dates you want to reserve.</div>
+        </div>
+        <ng-container *ngIf=" !(userService.user$ | async)
+          ">
+          <div class="mt-5" style="color: red; text-align: center; font-size:20px">
+            To see the available dates and reserve the item, please log in to your profile.
+          </div>
+          </ng-container>
+        </div>
+
+        <div class="item-front" *ngIf="cardService.getCheckoutStatus()">
+          <div id="booking" class="section">
+            <div class="section-center">
+              <div class="container">
+                <div class="row">
+                  <div class="booking-cta">
+                    <h1>Make your reservation</h1>
+                  </div>
+                  <div>
+                    <div class="booking-form">
+                      <form>
+                        <div class="form-group">
+                          <span class="form-label">Your Names</span>
+                          <input class="form-control" type="text" placeholder="Enter a destination or hotel name" required>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-6">
                             <div class="form-group">
-                              <span class="form-label">Price</span>
-                              <input class="form-control" required disabled [value]="cardService.getTotalPrice()">
+                              <span class="form-label">Town</span>
+                              <input class="form-control" required>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <span class="form-label">Phone</span>
+                              <input class="form-control" required/>
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-sm-4">
-                          <div class="form-group">
-                            <span class="form-label">Card number</span>
-                            <input class="form-control" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}"
-                                   autocomplete="cc-number" maxlength="19" placeholder="xxxx xxxx xxxx xxxx"
-                                   required>
-                            <span class="select-arrow"></span>
+                        <div class="row">
+                          <div class="col-sm-8">
+                            <div class="col-sm-4">
+                              <div class="form-group">
+                                <span class="form-label">Price</span> лв.
+                                <input class="form-control" required disabled [value]="cardService.getTotalPrice()">
+                              </div>
+                            </div>
                           </div>
                         </div>
-                        <div class="col-sm-4">
-                          <div class="form-group">
-                            <span class="form-label">Expiration Date</span>
-                            <input class="form-control" maxlength="7" placeholder="mm/yyyy" required/>
+                        <div class="row">
+                          <div class="col-sm-4">
+                            <div class="form-group">
+                              <span class="form-label">Card number</span>
+                              <input class="form-control" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}"
+                                     autocomplete="cc-number" maxlength="19" placeholder="xxxx xxxx xxxx xxxx"
+                                     required>
+                              <span class="select-arrow"></span>
+                            </div>
                           </div>
-                        </div>
-                        <div class="col-sm-4">
-                          <div class="form-group">
-                            <span class="form-label">CVV</span>
-                            <input class="form-control" maxlength="3" placeholder="XXX" required/>
+                          <div class="col-sm-4">
+                            <div class="form-group">
+                              <span class="form-label">Expiration Date</span>
+                              <input class="form-control" maxlength="7" placeholder="mm/yyyy" required/>
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="form-group">
+                              <span class="form-label">CVV</span>
+                              <input class="form-control" maxlength="3" placeholder="XXX" required/>
 
-                            <span class="select-arrow"></span>
+                              <span class="select-arrow"></span>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div class="form-btn">
-                        <button class="submit-btn" (click)="checkout()">Checkout</button>
-                      </div>
-                    </form>
+                        <div class="form-btn">
+                          <button class="submit-btn" (click)="checkout()">Checkout</button>
+                        </div>
+                      </form>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <div *ngIf="this.succsessCheckout" class="reservation-confirmation mt-3">
+            <h2>Your reservation has been successful!</h2>
+            <button class="continue-shopping" (click)="continueShopping()">Continue Shopping</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>

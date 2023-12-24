@@ -1,5 +1,5 @@
-<div class="product-cart me-5" *ngIf="cardService.isShoppingCartOpen &&( userService.user$ | async)">
-  <div *ngIf="cardService.cartItems && cardService.cartItems.length > 0">
+<div *ngIf="cardService.isShoppingCartOpen &&( userService.user$ | async)">
+  <div class="product-cart me-5" *ngIf="cardService.cartItems && cardService.cartItems.length > 0">
     <ul>
       <li class="justify-content-between" *ngFor="let item of cardService.cartItems">
         <img [width]="32" [height]="32" class="card-img-top"
@@ -14,36 +14,15 @@
     </ul>
     <div class="cart-total">
       <!--    <p><button type="button" class="btn btn-outline-primary btn-sm" (click)="emptyCart()">Empty Cart</button></p>-->
-      <p class="text-right">
-        <strong class="d-block">Total:</strong>
-        <span class="d-block">{{getTotalPrice() }} лв.</span>
-        <br/>
-        <button type="button" aria-label="Checkout" (click)="requestCheckout()">
-          <span>Checkout</span>
-        </button>
-      </p>
+      <div class="row d-flex justify-content-between">
+        <div>Total: {{getTotalPrice() }} лв.</div>
+        <div>
+          <button type="button" aria-label="Checkout" (click)="requestCheckout()">
+            <span>Checkout</span>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
-  <div *ngIf="cardService.cartItems === []  && cardService.cartItems.length === 0" >
-
-<!--    <ul>-->
-<!--          <div style="width: 100px">-->
-<!--            <img src="../src/assets/images/icons8-shopping-cart-48.png" alt="My Image">-->
-<!--            <h3><strong>Your Cart is Empty</strong></h3>-->
-<!--          </div>-->
-<!--    </ul>-->
-<!--    <div class="cart-total">-->
-<!--      &lt;!&ndash;    <p><button type="button" class="btn btn-outline-primary btn-sm" (click)="emptyCart()">Empty Cart</button></p>&ndash;&gt;-->
-<!--      <p class="text-right">-->
-<!--        <strong class="d-block">Total:</strong>-->
-<!--        <span class="d-block">{{getTotalPrice() }} лв.</span>-->
-<!--        <br/>-->
-<!--        <button type="button" aria-label="Checkout" (click)="requestCheckout()">-->
-<!--          <span>Checkout</span>-->
-<!--        </button>-->
-<!--      </p>-->
-<!--    </div>-->
-  </div>
-
 </div>
 

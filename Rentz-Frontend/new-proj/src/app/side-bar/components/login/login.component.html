@@ -18,28 +18,28 @@
             <h4 style="text-align: center">Log into your profile to rent items.</h4>
             <div *ngIf="!showRegisterForm">
               <h2>Login</h2>
-              <!--                            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">-->
+              <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
-              <!--                              <div class="input-group">-->
-              <!--                                <label for="email">Email</label>-->
-              <!--                                <input formControlName="email" type="email" id="email" name="newEmail" required>-->
-              <!--                                <div *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched"-->
-              <!--                                     class="error-message">Email is required-->
-              <!--                                </div>-->
-              <!--                              </div>-->
+                <div class="input-group">
+                  <label for="email">Email</label>
+                  <input formControlName="email" type="email" id="email" name="newEmail" required>
+                  <div *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched"
+                       class="error-message">Email is required
+                  </div>
+                </div>
 
 
-              <!--                              <div class="input-group">-->
-              <!--                                <label for="newPassword">Password</label>-->
-              <!--                                <input type="password" id="password" name="newPassword" formControlName="password" required>-->
+                <div class="input-group">
+                  <label for="password">Password</label>
+                  <input type="password" id="password" name="newPassword" formControlName="password" required>
 
-              <!--                                <div *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched"-->
-              <!--                                     class="error-message">Password is required-->
-              <!--                                </div>-->
-              <!--                              </div>-->
+                  <div *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched"
+                       class="error-message">Password is required
+                  </div>
+                </div>
 
-              <!--                              <button type="submit">Login</button>-->
-              <!--                            </form>-->
+                <button type="submit">Login</button>
+              </form>
 
               <div class="separator">or</div>
 
@@ -47,7 +47,7 @@
               <div class="google-login">
                 <button (click)="loginWithGoogle()">Login with Google</button>
               </div>
-
+              <br>
               <div class="register-link">
                 <p>Don't have an account? <a href="#" (click)="toggleRegister()">Register here</a></p>
               </div>
@@ -88,8 +88,16 @@
             </li>
             <li (click)="showUsersItemsForRent()"><a href="#"><span class="fa fa-envelope"></span> 🎮 My items for rent
             </a></li>
-            <li><a href="#"><span class="fa fa-cog"></span> 📆 My Reservations</a></li>
-            <li><a href="#"><span class="fa fa-clock-o"></span> 🏃 Logout</a></li>
+            <li><a href="#"><span class="fa fa-cog"></span> 📆 My Reservations</a>
+              <ul *ngIf="isMyReservationsOpen" class="list-group">
+                <li class="list-group-item">Cras justo odio</li>
+                <li class="list-group-item">Dapibus ac facilisis in</li>
+                <li class="list-group-item">Morbi leo risus</li>
+                <li class="list-group-item">Porta ac consectetur ac</li>
+                <li class="list-group-item">Vestibulum at eros</li>
+              </ul>
+            </li>
+            <li><a href="#"><span (click)="logout()" class="fa fa-clock-o"></span> 🏃 Logout</a></li>
           </ul>
         </nav>
       </div>

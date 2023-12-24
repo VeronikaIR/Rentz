@@ -11,8 +11,8 @@ export class UserService {
 
   private apiUrlUsers = 'http://localhost:8080/api/users';
 
-  private userSubject: ReplaySubject<User> = new ReplaySubject<User>(1);
-  user$: Observable<User> = this.userSubject.asObservable();
+  private userSubject: ReplaySubject<User | null> = new ReplaySubject<User | null>(1);
+  user$: Observable<User | null> = this.userSubject.asObservable();
 
   constructor(private http: HttpClient) {
   }
@@ -47,7 +47,7 @@ export class UserService {
   }
 
 
-  setUser(user: User): void {
+  setUser(user: User | null): void {
     this.userSubject.next(user);
   }
 

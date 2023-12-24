@@ -8,10 +8,9 @@ import {ReservationService} from "../../overview/service/reservation.service";
 })
 export class CardService {
 
-  //TODO list of reservations
   public cartItems: Reservation[] = [];
   public products = new Subject();
-  public checkoutRequested = false;
+  public checkoutRequested:boolean = false;
 
   public isShoppingCartOpen: boolean = false;
 
@@ -77,4 +76,9 @@ export class CardService {
   public getCheckoutStatus() {
     return this.checkoutRequested;
   }
+
+
+  // getReservationsByUserId(userId: string): Observable<Reservation> {
+  //
+  // }
 }

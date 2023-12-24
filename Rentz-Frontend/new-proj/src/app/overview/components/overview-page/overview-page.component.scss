@@ -124,7 +124,7 @@
   .price-info {
     font-size: 18px;
     color: #000;
-    text-align: center;
+    //text-align: center;
     margin-top: 5px;
   }
 
@@ -225,7 +225,7 @@
     appearance: none;
   }
 
-  .booking-form select.form-control+.select-arrow {
+  .booking-form select.form-control + .select-arrow {
     position: absolute;
     right: 0px;
     bottom: 4px;
@@ -238,7 +238,7 @@
     font-size: 14px;
   }
 
-  .booking-form select.form-control+.select-arrow:after {
+  .booking-form select.form-control + .select-arrow:after {
     content: '\279C';
     display: block;
     -webkit-transform: rotate(90deg);
@@ -295,6 +295,7 @@
   border: none;
   padding: 0;
 }
+
 .custom-day {
   text-align: center;
   padding: 0.185rem 0.25rem;
@@ -302,14 +303,41 @@
   height: 2rem;
   width: 2rem;
 }
+
 .custom-day.focused {
   background-color: #e6e6e6;
 }
+
 .custom-day.range,
 .custom-day:hover {
   background-color: rgb(2, 117, 216);
   color: white;
 }
+
 .custom-day.faded {
   background-color: rgba(2, 117, 216, 0.5);
+}
+
+/* style.css */
+
+.reservation-confirmation {
+  text-align: center;
+  padding: 20px;
+  background-color: #eee;
+  border-radius: 10px;
+}
+
+.reservation-confirmation h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.continue-shopping {
+  padding: 10px 20px;
+  background-color: #008CBA;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }

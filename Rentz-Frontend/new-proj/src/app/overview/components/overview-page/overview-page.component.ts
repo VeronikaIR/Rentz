@@ -1,14 +1,22 @@
 import {Component, OnInit} from '@angular/core';
 import {Item} from "../../models/item";
-import {ReservationCreateDTO} from "../../models/reservation";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl} from "@angular/forms";
 import {ItemService} from "../../service/item.service";
 import {User} from "../../../side-bar/models/user";
-import {AuthService} from "../../../side-bar/service/auth.service";
 import {UserService} from "../../../side-bar/service/user.service";
 import {ReservationService} from "../../service/reservation.service";
 import {Reservation} from "../../../shared/interface/reservation";
 import {CardService} from "../../../shared/service/card.service";
+import {ReservationCreateDTO} from "../../models/reservation";
+import {HttpClient} from "@angular/common/http";
+import {switchMap, take} from "rxjs";
+
+interface DateParts {
+  year: number;
+  month: number;
+  day: number;
+}
+
 
 @Component({
   selector: 'app-overview-page',
@@ -24,25 +32,28 @@ export class OverviewPageComponent implements OnInit {
   showReservationForm: boolean = false;
   //reservationForm!: FormGroup;
   dateFormControl: FormControl<Date[]> = new FormControl();
+  succsessCheckout: boolean = false;
 
 
   isFlipped: boolean = false;
+  isClickedReserve: boolean = false;
 
 
   public selectedItem?: Item;
   public selectedUser!: User;
 
+  protected readonly Date = Date;
 
-  constructor(private fb: FormBuilder,
-              public itemService: ItemService,
-              private authService: AuthService,
-              public userService: UserService,
-              public reservationService: ReservationService,
-              public cardService: CardService) {
+  constructor(
+    public itemService: ItemService,
+    public userService: UserService,
+    public http: HttpClient,
+    public reservationService: ReservationService,
+    public cardService: CardService) {
   }
 
   ngOnInit(): void {
-   // this.createForm();
+    // this.createForm();
     //this.myDateValue = new Date();
     this.itemService.getItems().subscribe(
       (data) => {
@@ -86,26 +97,34 @@ export class OverviewPageComponent implements OnInit {
 
   public closeItemInfo(): void {
     this.showItemInformation = false;
+    this.cardService.checkoutRequested = false;
+    this.succsessCheckout = false;
     this.dateFormControl.reset();
 
   }
 
   reserve() {
-    //this.isFlipped = !this.isFlipped;
+
+    if (this.dateFormControl.value) {
+      this.showItemInformation = false;
+      this.isClickedReserve = true;
+      this.isClickedReserve = false;
+    }
 
 
-    this.userService.user$.subscribe((user: User) => {
+    this.userService.user$.subscribe((user) => {
 
-      if (this.selectedItem) {
+      if (this.selectedItem && user) {
+        this.isClickedReserve = true;
         let bookedOn = this.dateFormControl.value[0];
         let bookedUntil = this.dateFormControl.value[1];
 
-        let totalPrice = this.calculateDaysInRange(bookedOn, bookedUntil) * this.selectedItem.pricePerDay;
+        //  let totalPrice = this.countDaysBetweenDates(bookedOn, bookedUntil, this.selectedItem.reservationDates) * this.selectedItem.pricePerDay;
 
         const reservation: Reservation = {
           ownerId: user.id,
           item: this.selectedItem,
-          totalPrice: totalPrice,
+          totalPrice: 20,
           bookedOn: bookedOn,
           bookedUntil: bookedUntil
         };
@@ -115,18 +134,36 @@ export class OverviewPageComponent implements OnInit {
     });
 
 
-    this.showItemInformation = false;
     this.dateFormControl.reset();
 
   }
 
-  calculateDaysInRange(start: Date, end: Date) {
-    return ((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+  // calculateDaysInRange(start: Date, end: Date, ) {
+  //   return ((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+  // }
+
+  countDaysBetweenDates(startDate: Date, endDate: Date, excludeDates: Date[]): number {
+    let datesCopy: Date[] = [...excludeDates].map((dateString) => new Date(dateString));
+    console.log(startDate);
+    console.log(endDate);
+    console.log(datesCopy);
+
+    let days = 0;
+    let currentDate = startDate;
+
+    while (currentDate <= endDate) {
+      if (!datesCopy.includes(currentDate)) {
+        debugger;
+        days++;
+      }
+
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    console.log(days);
+    return days;
   }
 
   disableDates(item: Item | undefined): Date[] {
-    console.log(item?.reservationDates);
-
     var disabledDates: Date[] = [];
     item?.reservationDates.forEach((date) => {
       disabledDates.push(new Date(date));
@@ -135,74 +172,69 @@ export class OverviewPageComponent implements OnInit {
     return disabledDates;
   }
 
-  //
-  // showReservationScreen(): void {
-  //   console.log(this.showReservationForm);
-  //   this.showReservationForm = !this.showReservationForm;
-  // }
+
+  checkout() {
+    // this.reservationService.checkout();
+
+    var reservations: ReservationCreateDTO[] = [];
+    this.reservationService.reservationsList.forEach((res) => {
+      reservations.push({
+        ownerId: res.ownerId,
+        itemId: res.item.id,
+        totalPrice: res.totalPrice,
+        bookedOn: res.bookedOn,
+        bookedUntil: res.bookedUntil
+      });
+    });
+
+    this.http.post('http://localhost:8080/api/reservations', reservations)
+      .pipe(
+        take(1),
+        switchMap(() => {
+          this.succsessCheckout = true;
+          return this.itemService.getItems();
+        }))
+      .subscribe((data) => {
+        this.itemService.items = data;
+        this.itemService.filteredItems = data;
+      });
 
 
-  createForm(): void {
-    // this.reservationForm = this.fb.group({
-    //   name: ['John Doe', Validators.required],
-    //   town: ['Sofia', Validators.required],
-    //   phone: ['+359 545 4332', Validators.required],
-    //   price: [null, Validators.required],
-    //   bookedOn: [null, Validators.required],
-    //   bookedUntil: [null, Validators.required],
-    //   cardNumber: [null, Validators.required],
-    //   expiryDate: [null, Validators.required],
-    //   cvv: [null, Validators.required],
+    // this.itemService.getItems().pipe(take(1),
+    //   switchMap((data) => {
+    //     this.itemService.items = data;
+    //     this.itemService.filteredItems = data;
+    //
+    //     return this.http.post('http://localhost:8080/api/reservations', reservations);
+    //   })).subscribe(() => {
+    //   this.succsessCheckout = true;
+    // });
+
+    // reservations.forEach((reservation) => {
+    // this.http.post<string>('http://localhost:8080/api/reservations', reservations).subscribe((result: string) => {
+    //
+    //   if (result) {
+    //     //disable button
+    //     this.succsessCheckout = true;
+    //
+    //     this.cardService.emptyCart();
+    //     this.itemService.getItems().subscribe(
+    //       (data) => {
+    //         this.itemService.items = data;
+    //         this.itemService.filteredItems = data;
+    //       },
+    //       (error) => {
+    //         console.error('Error fetching items:', error);
+    //       }
+    //     );
+    //   }
     // });
   }
 
-  onSubmit() {
-    // Handle form submission logic here
-    //console.log(this.reservationForm.value);
-  }
-
-
-  // /*************** Date picker **************************/
-  // onDateSelection(date: NgbDate) {
-  //   if (!this.fromDate && !this.toDate) {
-  //     this.fromDate = date;
-  //   } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
-  //     this.toDate = date;
-  //   } else {
-  //     this.toDate = null;
-  //     this.fromDate = date;
-  //   }
-  // }
-  //
-  // isHovered(date: NgbDate) {
-  //   return (
-  //     this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate)
-  //   );
-  // }
-  //
-  // isInside(date: NgbDate) {
-  //   return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
-  // }
-  //
-  // isRange(date: NgbDate) {
-  //   return (
-  //     date.equals(this.fromDate) ||
-  //     (this.toDate && date.equals(this.toDate)) ||
-  //     this.isInside(date) ||
-  //     this.isHovered(date)
-  //   );
-  // }
-  //
-  // validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
-  //   const parsed = this.formatter.parse(input);
-  //   return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
-  // }
-
-  protected readonly Date = Date;
-
-  checkout() {
-    this.reservationService.checkout();
-
-
+  continueShopping(): void {
+    this.cardService.emptyCart();
+    this.showItemInformation = false;
+    this.cardService.checkoutRequested = false;
+    this.succsessCheckout = false;
   }
 }
