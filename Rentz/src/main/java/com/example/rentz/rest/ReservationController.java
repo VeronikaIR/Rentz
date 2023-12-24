@@ -10,7 +10,6 @@ import com.example.rentz.mapper.ReservationMapper;
 import com.example.rentz.service.ItemService;
 import com.example.rentz.service.ReservationService;
 import com.example.rentz.service.UserService;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -56,18 +55,32 @@ public class ReservationController {
         return ResponseEntity.ok(this.reservationMapper.toReservationDto(reservation));
     }
 
+    // TODOO
+    @GetMapping("/owner/{id}")
+    public ResponseEntity<ReservationDto> getReservationsByUser(@PathVariable Long id) {
+
+        User user = userService.getUserById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        Reservation reservation = reservationService.getReservationByOwner(user).orElseThrow(() -> new ResourceNotFoundException("Reservation not found"));
+
+        return ResponseEntity.ok(this.reservationMapper.toReservationDto(reservation));
+    }
+
     @PostMapping
-    public ResponseEntity<ReservationDto> createReservation(@RequestBody ReservationCreateDto reservationCreateDto) {
+    public ResponseEntity<String> createReservation(@RequestBody List<ReservationCreateDto> reservationCreateDtoList) {
 
-        User user = this.userService.getUserById(reservationCreateDto.getOwnerId()).orElseThrow(() -> new ResourceNotFoundException("User not found!"));
-        Item item = this.itemService.getItemById(reservationCreateDto.getOwnerId()).orElseThrow(() -> new ResourceNotFoundException("Item not found!"));
+        User user = this.userService.getUserById(reservationCreateDtoList.get(0).getOwnerId()).orElseThrow(() -> new ResourceNotFoundException("User not found!"));
 
-        Reservation reservation = reservationMapper.toReservation(reservationCreateDto);
-        reservation.setOwner(user);
-        reservation.setItem(item);
-        Reservation createdReservation = reservationService.createReservation(reservation);
+        reservationCreateDtoList.forEach(reservationCreateDto -> {
+            Item item = this.itemService.getItemById(reservationCreateDto.getItemId()).orElseThrow(() -> new ResourceNotFoundException("Item not found!"));
 
-        return new ResponseEntity<>(this.reservationMapper.toReservationDto(createdReservation), HttpStatus.CREATED);
+            Reservation reservation = reservationMapper.toReservation(reservationCreateDto);
+            reservation.setOwner(user);
+            reservation.setItem(item);
+            reservationService.createReservation(reservation);
+        });
+
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("{\"message\": \"created\"}");
     }
 
 //    @PutMapping("/{id}")

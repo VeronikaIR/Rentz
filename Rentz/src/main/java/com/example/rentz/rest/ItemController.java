@@ -46,7 +46,7 @@ public class ItemController {
                 LocalDate startDate = reservation.getBookedOn();
                 LocalDate endDate = reservation.getBookedUntil();
                 List<LocalDate> dates = startDate.datesUntil(endDate)
-                        .collect(Collectors.toList());
+                        .toList();
                 reservationDates.addAll(dates);
                 reservationDates.add(endDate);
                 Collections.sort(reservationDates);

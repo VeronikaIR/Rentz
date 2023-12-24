@@ -50,9 +50,11 @@ public class UserController {
     }
 
     @GetMapping("/info")
-    public ResponseEntity<UserDetailedDto> getUserInfo(OAuth2User oAuth2User) {
-        User user = userService.getUserById(oAuth2User.getAttribute("id"))
+    public ResponseEntity<UserDetailedDto> getUserInfo() {
+        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.getFireBaseId(userDetails.getUid())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
 
         return ResponseEntity.ok(this.userMapper.toUserDetailedDto(user));
     }
@@ -80,7 +82,17 @@ public class UserController {
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDetailedDto> createUser(@RequestBody UserCreateDto userCreateDto) {
 
-        User createdUser = userService.createUser(this.userMapper.toUser(userCreateDto));
+        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        User userToCreate = new User();
+        userToCreate.setEmail(userDetails.getEmail());
+        userToCreate.setFireBaseId(userDetails.getUid());
+        userToCreate.setName(userCreateDto.getName());
+        userToCreate.setTown(userCreateDto.getTown());
+        userToCreate.setPhoneNumber(userCreateDto.getPhoneNumber());
+
+
+        User createdUser = userService.createUser(userToCreate);
 
         return ResponseEntity.ok(this.userMapper.toUserDetailedDto(createdUser));
     }

@@ -19,6 +19,8 @@ public class ReservationDto {
 
     private Long itemId;
 
+    private String itemTitle;
+
     private Double totalPrice;
 
     private LocalDate bookedOn;

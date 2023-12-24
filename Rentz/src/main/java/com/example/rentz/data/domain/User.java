@@ -36,7 +36,7 @@ public class User {
     private String email;
 
    // @NotBlank
-    private String personalInformation;
+    //private String personalInformation;
 
    // @NotBlank
     private String phoneNumber;

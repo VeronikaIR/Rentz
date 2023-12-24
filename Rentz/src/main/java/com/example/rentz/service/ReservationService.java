@@ -1,6 +1,7 @@
 package com.example.rentz.service;
 
 import com.example.rentz.data.domain.Reservation;
+import com.example.rentz.data.domain.User;
 import com.example.rentz.data.repository.ReservationRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,11 @@ public class ReservationService {
 
     public Optional<Reservation> getReservationById(Long id) {
         return reservationRepository.findById(id);
+    }
+
+
+    public Optional<Reservation> getReservationByOwner(User user) {
+        return reservationRepository.findByOwner(user);
     }
 
     public Reservation createReservation(Reservation reservation) {
