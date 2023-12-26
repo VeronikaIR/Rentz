@@ -30,7 +30,6 @@ export class OverviewPageComponent implements OnInit {
   showCheckoutPopup: boolean = false;
   isPageLoaded: boolean = false;
   showReservationForm: boolean = false;
-  //reservationForm!: FormGroup;
   dateFormControl: FormControl<Date[]> = new FormControl();
   succsessCheckout: boolean = false;
 
@@ -40,6 +39,7 @@ export class OverviewPageComponent implements OnInit {
 
 
   public selectedItem?: Item;
+  totalPrice: number = 0;
   public selectedUser!: User;
 
   protected readonly Date = Date;
@@ -119,12 +119,12 @@ export class OverviewPageComponent implements OnInit {
         let bookedOn = this.dateFormControl.value[0];
         let bookedUntil = this.dateFormControl.value[1];
 
-        //  let totalPrice = this.countDaysBetweenDates(bookedOn, bookedUntil, this.selectedItem.reservationDates) * this.selectedItem.pricePerDay;
+        this.totalPrice = this.countDaysBetweenDates(bookedOn, bookedUntil, this.selectedItem.reservationDates) * this.selectedItem.pricePerDay;
 
         const reservation: Reservation = {
           ownerId: user.id,
           item: this.selectedItem,
-          totalPrice: 20,
+          totalPrice: this.totalPrice,
           bookedOn: bookedOn,
           bookedUntil: bookedUntil
         };
@@ -138,28 +138,25 @@ export class OverviewPageComponent implements OnInit {
 
   }
 
-  // calculateDaysInRange(start: Date, end: Date, ) {
-  //   return ((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
-  // }
-
   countDaysBetweenDates(startDate: Date, endDate: Date, excludeDates: Date[]): number {
-    let datesCopy: Date[] = [...excludeDates].map((dateString) => new Date(dateString));
-    console.log(startDate);
-    console.log(endDate);
-    console.log(datesCopy);
-
-    let days = 0;
-    let currentDate = startDate;
+    let datesCopy: Date[] = [...excludeDates].map((dateString: Date) => new Date(dateString));
+    let days: number = 0;
+    let currentDate = new Date(startDate);
 
     while (currentDate <= endDate) {
-      if (!datesCopy.includes(currentDate)) {
-        debugger;
+      let flag = false;
+      datesCopy.forEach((date) => {
+        if (date.getUTCFullYear() === currentDate.getUTCFullYear()
+          && date.getMonth() === currentDate.getMonth()
+          && date.getDate() === currentDate.getDate()) {
+          flag = true;
+        }
+      });
+      if (!flag) {
         days++;
       }
-
       currentDate.setDate(currentDate.getDate() + 1);
     }
-    console.log(days);
     return days;
   }
 

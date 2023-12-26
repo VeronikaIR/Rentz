@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {CreateItemFormGroup} from "../../../overview/models/create-item-form-group";
-import {take} from "rxjs";
+import {switchMap, take} from "rxjs";
 import {ItemService} from "../../../overview/service/item.service";
+import {Item} from "../../../overview/models/item";
 
 @Component({
   selector: 'app-create-item',
@@ -12,8 +13,6 @@ import {ItemService} from "../../../overview/service/item.service";
 export class CreateItemComponent implements OnInit {
 
   createItemFromGroup!: FormGroup<CreateItemFormGroup>;
-
-
 
   constructor(private formBuilder: FormBuilder, public itemService: ItemService) {
   }
@@ -42,9 +41,17 @@ export class CreateItemComponent implements OnInit {
     if (this.createItemFromGroup.value.picture3) formData.set('picture3', this.createItemFromGroup.value.picture3);
     if (this.createItemFromGroup.value.pricePerDay) formData.set('pricePerDay', this.createItemFromGroup.value.pricePerDay.toString());
 
-    this.itemService.createItem(formData).pipe(take(1)).subscribe(() => {
-      //TODO behaviour subject
-    })
+    this.itemService.createItem(formData)
+      .pipe(take(1),
+        switchMap((item: Item) => {
+
+          return this.itemService.getItems();
+        }))
+      .subscribe((data) => {
+        this.itemService.items = data;
+        this.itemService.filteredItems = data;
+        this.itemService.addItemForRentOpened = false;
+      });
 
   }
 

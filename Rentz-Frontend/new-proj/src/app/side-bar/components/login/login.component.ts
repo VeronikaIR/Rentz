@@ -3,6 +3,10 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../service/auth.service";
 import {UserService} from "../../service/user.service";
 import {ItemService} from "../../../overview/service/item.service";
+import {HttpClient} from "@angular/common/http";
+import {of, switchMap, take} from "rxjs";
+import {Reservation} from "../../../shared/interface/reservation";
+import {ReservationDto} from "../../../shared/interface/reservationDto";
 
 @Component({
   selector: 'app-login',
@@ -18,16 +22,20 @@ export class LoginComponent implements OnInit {
 
   addItemForRentOpened: boolean = false;
   isMyReservationsOpen: boolean = false;
+  usersReservations: ReservationDto[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
     public userService: UserService,
-    public itemService: ItemService
+    public itemService: ItemService,
+    public http: HttpClient
   ) {
   }
 
   ngOnInit() {
+    this.usersReservations = [];
+    this.isMyReservationsOpen = false;
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required]
@@ -63,6 +71,26 @@ export class LoginComponent implements OnInit {
         this.itemService.filteredItems = user.itemsForRent;
       }
     })
+
+  }
+
+  showUserReservations(): void {
+
+    this.isMyReservationsOpen = !this.isMyReservationsOpen;
+    if (this.isMyReservationsOpen) {
+
+      this.userService.user$.pipe(take(1), switchMap((user) => {
+        if (user) {
+          return this.http.get<ReservationDto[]>(`http://localhost:8080/api/reservations/owner/${user.id}`);
+        }
+        return of(null);
+      })).subscribe((reservationsArr: ReservationDto[] | null) => {
+        if (reservationsArr) {
+          this.usersReservations = reservationsArr;
+          console.log(this.usersReservations);
+        }
+      });
+    }
 
   }
 
