@@ -26,8 +26,8 @@ public class ReservationService {
     }
 
 
-    public Optional<Reservation> getReservationByOwner(User user) {
-        return reservationRepository.findByOwner(user);
+    public List<Reservation> getReservationByOwner(User user) {
+        return reservationRepository.findAllByOwner(user);
     }
 
     public Reservation createReservation(Reservation reservation) {

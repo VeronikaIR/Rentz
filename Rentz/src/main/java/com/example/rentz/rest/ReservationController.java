@@ -55,14 +55,21 @@ public class ReservationController {
         return ResponseEntity.ok(this.reservationMapper.toReservationDto(reservation));
     }
 
-    // TODOO
+
     @GetMapping("/owner/{id}")
-    public ResponseEntity<ReservationDto> getReservationsByUser(@PathVariable Long id) {
+    public ResponseEntity<List<ReservationDto>> getReservationsByUser(@PathVariable Long id) {
 
         User user = userService.getUserById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
-        Reservation reservation = reservationService.getReservationByOwner(user).orElseThrow(() -> new ResourceNotFoundException("Reservation not found"));
+        List<Reservation> reservations = reservationService.getReservationByOwner(user);
+        List<ReservationDto> toReturn = new ArrayList<>();
+        reservations.forEach((reservation -> {
+            ReservationDto reservationDto = this.reservationMapper.toReservationDto(reservation);
+            reservationDto.setItemTitle(reservation.getItem().getTitle());
+            toReturn.add(reservationDto);
+        }
+        ));
 
-        return ResponseEntity.ok(this.reservationMapper.toReservationDto(reservation));
+        return ResponseEntity.ok(toReturn);
     }
 
     @PostMapping
