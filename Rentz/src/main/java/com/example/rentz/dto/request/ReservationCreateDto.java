@@ -16,7 +16,7 @@ import java.time.LocalDate;
 public class ReservationCreateDto {
 
     @NotBlank
-    private Long ownerId;
+    private String ownerId;
 
     @NotBlank
     private Long itemId;

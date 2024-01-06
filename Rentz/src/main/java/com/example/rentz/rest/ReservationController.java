@@ -75,7 +75,7 @@ public class ReservationController {
     @PostMapping
     public ResponseEntity<String> createReservation(@RequestBody List<ReservationCreateDto> reservationCreateDtoList) {
 
-        User user = this.userService.getUserById(reservationCreateDtoList.get(0).getOwnerId()).orElseThrow(() -> new ResourceNotFoundException("User not found!"));
+        User user = this.userService.getFireBaseId(reservationCreateDtoList.get(0).getOwnerId()).orElseThrow(() -> new ResourceNotFoundException("User not found!"));
 
         reservationCreateDtoList.forEach(reservationCreateDto -> {
             Item item = this.itemService.getItemById(reservationCreateDto.getItemId()).orElseThrow(() -> new ResourceNotFoundException("Item not found!"));
