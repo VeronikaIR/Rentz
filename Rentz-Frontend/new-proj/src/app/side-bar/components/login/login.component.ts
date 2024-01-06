@@ -5,8 +5,8 @@ import {UserService} from "../../service/user.service";
 import {ItemService} from "../../../overview/service/item.service";
 import {HttpClient} from "@angular/common/http";
 import {of, switchMap, take} from "rxjs";
-import {Reservation} from "../../../shared/interface/reservation";
 import {ReservationDto} from "../../../shared/interface/reservationDto";
+import {AngularFireAuth} from "@angular/fire/compat/auth";
 
 @Component({
   selector: 'app-login',
@@ -29,7 +29,8 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     public userService: UserService,
     public itemService: ItemService,
-    public http: HttpClient
+    public http: HttpClient,
+    public afAuth: AngularFireAuth,
   ) {
   }
 
@@ -99,11 +100,15 @@ export class LoginComponent implements OnInit {
     this.isMyReservationsOpen = !this.isMyReservationsOpen;
   }
 
+  test() {
+    alert('test');
+  }
   logout() {
     this.authService.afAuth.signOut()
       .then(() => {
         localStorage.removeItem("user");
         this.userService.setUser(null);
+        location.reload();
       })
       .catch(error => {
         // Handle logout error

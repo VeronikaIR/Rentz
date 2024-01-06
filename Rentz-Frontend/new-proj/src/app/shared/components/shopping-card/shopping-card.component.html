@@ -1,7 +1,7 @@
 <div *ngIf="cardService.isShoppingCartOpen &&( userService.user$ | async)">
   <div class="product-cart me-5" *ngIf="cardService.cartItems && cardService.cartItems.length > 0">
     <ul>
-      <li class="justify-content-between" *ngFor="let item of cardService.cartItems">
+      <li style="cursor: pointer" class="justify-content-between" *ngFor="let item of cardService.cartItems">
         <img [width]="32" [height]="32" class="card-img-top"
              src="{{'data:image/jpg;base64,' + item.item.picture1Base64}}" alt="Card image cap">
         {{item.item.title}}
@@ -17,9 +17,14 @@
       <div class="row d-flex justify-content-between">
         <div>Total: {{getTotalPrice() }} лв.</div>
         <div>
-          <button type="button" aria-label="Checkout" (click)="requestCheckout()">
-            <span>Checkout</span>
-          </button>
+<!--          <button type="button" aria-label="Checkout" (click)="requestCheckout()">-->
+<!--            <span>Checkout</span>-->
+<!--          </button>-->
+          <!-- your.component.html -->
+          <div id="paypal-button-container" style="text-align: center; margin-top: 20px;">
+            <img style="cursor: pointer" src="https://lavendercottagecattery.co.uk/wp-content/uploads/2022/10/CITYPNG.COMDownload-PayPal-Yellow-Payment-Button-PNG-2100x770-2.png" (click)="onPaymentCreate()">
+          </div>
+
         </div>
       </div>
     </div>

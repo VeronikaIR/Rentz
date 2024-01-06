@@ -10,6 +10,7 @@ import {CardService} from "../../../shared/service/card.service";
 import {ReservationCreateDTO} from "../../models/reservation";
 import {HttpClient} from "@angular/common/http";
 import {switchMap, take} from "rxjs";
+import {ActivatedRoute} from "@angular/router";
 
 interface DateParts {
   year: number;
@@ -49,10 +50,42 @@ export class OverviewPageComponent implements OnInit {
     public userService: UserService,
     public http: HttpClient,
     public reservationService: ReservationService,
-    public cardService: CardService) {
+    public cardService: CardService,
+    private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
+    this.dateFormControl.valueChanges.subscribe((event) => {
+      let bookedOn = this.dateFormControl.value[0];
+      let bookedUntil = this.dateFormControl.value[1];
+      if (this.selectedItem) {
+        this.totalPrice = this.countDaysBetweenDates(bookedOn, bookedUntil, this.selectedItem.reservationDates) * this.selectedItem.pricePerDay;
+      }
+    });
+
+
+    this.route.queryParams.subscribe(params => {
+      if (params['paymentId'] && params['PayerID']) {
+        const paymentId = params['paymentId'];
+        const payerId = params['PayerID'];
+
+        this.http.post<any>('http://localhost:8080/paypal/complete/payment', {
+          'paymentId': paymentId,
+          'PayerID': payerId
+        })
+          .subscribe(response => {
+            if (response.status == 'success') {
+              // Handle successful completion on the frontend
+              alert('✅ Payment completed successfully!');
+              console.log('Payment completed successfully');
+            } else {
+              // Handle failure on the frontend
+              alert('🛑 Payment completion failed!\n\nDetails: ' + response.error);
+              console.log('Payment completion failed');
+            }
+          });
+      }
+    });
     // this.createForm();
     //this.myDateValue = new Date();
     this.itemService.getItems().subscribe(
@@ -131,6 +164,7 @@ export class OverviewPageComponent implements OnInit {
         this.cardService.addProductToCart(reservation);
         this.reservationService.addReservation(reservation);
       }
+      this.totalPrice = 0;
     });
 
 

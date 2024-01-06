@@ -20,9 +20,7 @@ export class AuthService {
   tokenAccess?: string;
 
 
-  constructor(private http: HttpClient, public afAuth: AngularFireAuth,
-              public afs: AngularFirestore,
-              public ngZone: NgZone,
+  constructor(public afAuth: AngularFireAuth,
               public router: Router,
               public userService: UserService
   ) {
@@ -138,6 +136,21 @@ export class AuthService {
     } else {
       localStorage.removeItem('user');
     }
+  }
+
+  public loadTokenAccessFromLocalStorage(): string | null {
+    const userString = localStorage.getItem('user');
+
+    if (userString) {
+      const user = JSON.parse(userString);
+      this.tokenAccess = user.stsTokenManager.accessToken;
+
+      user.id = user.uid;
+      this.currentUser = user;
+      this.userService.setUser(user);
+    }
+
+    return null;
   }
 
   // logout() {
